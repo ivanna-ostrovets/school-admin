@@ -11,7 +11,10 @@
   "devDependencies": {
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7"
+    "@types/react-dom": "^16.9.7",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5"
   },
   "scripts": {
     "start:client": "react-scripts start",
@@ -30,6 +33,17 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
