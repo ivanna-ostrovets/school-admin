@@ -1,5 +1,5 @@
 {
-  "name": "school-site-admin",
+  "name": "school-site-admin-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
