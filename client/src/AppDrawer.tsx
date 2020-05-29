@@ -1,14 +1,21 @@
 import {
   createStyles,
-  makeStyles,
-  Theme,
   Divider,
   Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+  Theme,
 } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import clsx from 'clsx';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTES } from './routes';
 
 const drawerWidth = 240;
 
@@ -76,6 +83,17 @@ export default function AppDrawer({ isOpen, onClose }: Props) {
       </div>
 
       <Divider />
+
+      <List>
+        <Link to={ROUTES.menuItems}>
+          <ListItem button>
+            <ListItemIcon>
+              <ClassRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Пункти меню" />
+          </ListItem>
+        </Link>
+      </List>
     </Drawer>
   );
 }
