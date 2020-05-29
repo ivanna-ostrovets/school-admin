@@ -2,6 +2,7 @@ import {
   createStyles,
   Divider,
   Drawer,
+  Icon,
   List,
   ListItem,
   ListItemIcon,
@@ -11,11 +12,10 @@ import {
 } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import clsx from 'clsx';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTES } from './routes';
+import { Link, useLocation } from 'react-router-dom';
+import { AppRoute, ROUTES } from './routes';
 
 const drawerWidth = 240;
 
@@ -54,6 +54,23 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+function DrawerItem({ icon, path, title }: AppRoute) {
+  const { pathname } = useLocation();
+  const Icon = icon;
+
+  return (
+    <Link to={path}>
+      <ListItem button selected={path === pathname}>
+        <ListItemIcon>
+          <Icon />
+        </ListItemIcon>
+
+        <ListItemText primary={title} />
+      </ListItem>
+    </Link>
+  );
+}
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -85,14 +102,11 @@ export default function AppDrawer({ isOpen, onClose }: Props) {
       <Divider />
 
       <List>
-        <Link to={ROUTES.menuItems}>
-          <ListItem button>
-            <ListItemIcon>
-              <ClassRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Пункти меню" />
-          </ListItem>
-        </Link>
+        {Object.values(ROUTES)
+          .filter(route => route.showInDrawer)
+          .map(route => (
+            <DrawerItem {...route} key={route.path} />
+          ))}
       </List>
     </Drawer>
   );

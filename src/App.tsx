@@ -1,47 +1,20 @@
 import {
-  AppBar,
   createStyles,
   CssBaseline,
-  IconButton,
   makeStyles,
   Theme,
-  Toolbar,
-  Typography,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import clsx from 'clsx';
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
+import AppToolbar from './AppToolbar';
+import MenuItems from './MenuItems';
 import { ROUTES } from './routes';
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    hide: {
-      display: 'none',
     },
     content: {
       flexGrow: 1,
@@ -64,32 +37,10 @@ function App() {
       <Router>
         <CssBaseline />
 
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: isDrawerOpen,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: isDrawerOpen,
-              })}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Link to={ROUTES.default}>
-              <Typography variant="h6">
-                Адміністративна панель Селецького ЗЗСО
-              </Typography>
-            </Link>
-          </Toolbar>
-        </AppBar>
+        <AppToolbar
+          isDrawerOpen={isDrawerOpen}
+          handleDrawerOpen={handleDrawerOpen}
+        />
 
         <AppDrawer isOpen={isDrawerOpen} onClose={handleDrawerClose} />
 
@@ -97,9 +48,11 @@ function App() {
           <div className={classes.toolbar} />
 
           <Switch>
-            <Route exact path={ROUTES.default} />
+            <Route exact path={ROUTES.default.path} />
 
-            <Route exact path={ROUTES.menuItems} />
+            <Route exact path={ROUTES.menuItems.path}>
+              <MenuItems />
+            </Route>
           </Switch>
         </main>
       </Router>
