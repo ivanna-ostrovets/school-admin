@@ -8,7 +8,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
 import AppToolbar from './AppToolbar';
-import MenuItems from './MenuItems';
+import MenuItems from './MenuItems/MenuItems';
 import { ROUTES } from './routes';
 
 const useStyles = makeStyles((theme: Theme) =>
