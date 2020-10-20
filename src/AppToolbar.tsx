@@ -63,7 +63,7 @@ function AppToolbar({
     }
 
     setPageTitle('');
-  });
+  }, [pathname]);
 
   return (
     <AppBar

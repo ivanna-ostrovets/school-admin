@@ -2,7 +2,6 @@ import {
   createStyles,
   Divider,
   Drawer,
-  Icon,
   List,
   ListItem,
   ListItemIcon,

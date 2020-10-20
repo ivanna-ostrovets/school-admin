@@ -1,0 +1,86 @@
+.rowWrapper {
+  padding: 2px 2px 2px 0;
+  height: 100%;
+  box-sizing: border-box;
+  cursor: move;
+}
+
+.rowWrapperDragDisabled {
+  cursor: default;
+}
+
+.row {
+  height: 100%;
+  white-space: nowrap;
+  display: flex;
+  padding-left: 3px !important;
+}
+
+.rowCancelPad {
+  cursor: not-allowed;
+}
+
+.rowContents {
+  position: relative;
+  height: 100%;
+  padding: 0 5px 0 30px;
+  min-width: 230px;
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  transition: none !important;
+  background-color: #fff !important;
+}
+
+.rowContents:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.rowLabel {
+  flex: 0 1 auto;
+  padding-right: 20px;
+  width: 100%;
+}
+
+.rowToolbar {
+  flex: 0 1 auto;
+  display: flex;
+}
+
+.moveHandle {
+  height: 100%;
+  width: 44px;
+  border: solid #aaa 1px;
+  box-shadow: 0 2px 2px -2px;
+  cursor: move;
+  border-radius: 1px;
+  z-index: 1;
+}
+
+.rowTitle {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+}
+
+.collapseButton,
+.expandButton {
+  position: absolute;
+  height: 100% !important;
+  margin-left: 20px !important;
+  top: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+
+.lineChildren {
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+}
