@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
 import AppToolbar from './AppToolbar';
 import MenuItems from './MenuItems/MenuItems';
+import Partners from './Partners/Partners';
 import { ROUTES } from './routes';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,6 +53,10 @@ function App() {
 
             <Route exact path={ROUTES.menuItems.path}>
               <MenuItems />
+            </Route>
+
+            <Route exact path={ROUTES.partners.path}>
+              <Partners />
             </Route>
           </Switch>
         </main>

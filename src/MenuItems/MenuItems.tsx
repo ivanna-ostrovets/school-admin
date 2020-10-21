@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   createStyles,
+  IconButton,
   makeStyles,
   TextField,
   Theme,
@@ -13,11 +14,10 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 import SortableTreeTheme from 'react-sortable-tree-theme-minimal';
+import { DB_KEY } from '../databaseKeys';
 import { db } from '../firebaseService';
 import MenuItem from './MenuItem/MenuItem';
 import './sortableTreeOverrides.css';
-
-const DB_KEY = 'menuItems';
 
 export interface DBMenuItem {
   id: string;
@@ -35,10 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
     menuItemsTree: {
       height: 750,
     },
-    itemAction: {
-      marginRight: theme.spacing(1),
-      cursor: 'pointer',
-    },
   }),
 );
 
@@ -53,7 +49,7 @@ function MenuItems() {
   const [editedItem, setEditedItem] = useState('');
 
   useEffect(() => {
-    db.ref(DB_KEY).on('value', snapshot => {
+    db.ref(DB_KEY.menuItems).on('value', snapshot => {
       setDbMenuItems(snapshot.val() || {});
     });
   }, []);
@@ -83,11 +79,11 @@ function MenuItems() {
   const addMenuItem = async () => {
     if (!newMenuItem) return;
 
-    const newId = db.ref().child(DB_KEY).push().key;
+    const newId = db.ref().child(DB_KEY.menuItems).push().key;
 
-    await db
-      .ref()
-      .update({ [`${DB_KEY}/${newId}`]: { title: newMenuItem, id: newId } });
+    await db.ref().update({
+      [`${DB_KEY.menuItems}/${newId}`]: { title: newMenuItem, id: newId },
+    });
 
     setNewMenuItem('');
   };
@@ -107,13 +103,14 @@ function MenuItems() {
       const children: string[] = [];
 
       for (const child of item.children as TreeItem[]) {
-        const newChildId = child.id || db.ref().child(DB_KEY).push().key;
+        const newChildId =
+          child.id || db.ref().child(DB_KEY.menuItems).push().key;
 
         if (!newChildId) continue;
 
         children.push(newChildId);
 
-        updates[`${DB_KEY}/${newChildId}`] = {
+        updates[`${DB_KEY.menuItems}/${newChildId}`] = {
           title: child.title as string,
           id: newChildId,
           parentId,
@@ -124,18 +121,18 @@ function MenuItems() {
 
       if (!children.length) return;
 
-      updates[`${DB_KEY}/${parentId}`] = {
-        ...updates[`${DB_KEY}/${parentId}`],
+      updates[`${DB_KEY.menuItems}/${parentId}`] = {
+        ...updates[`${DB_KEY.menuItems}/${parentId}`],
         children,
       };
     };
 
     for (const menuItem of menuItems) {
-      const newId = menuItem.id || db.ref().child(DB_KEY).push().key;
+      const newId = menuItem.id || db.ref().child(DB_KEY.menuItems).push().key;
 
       if (!newId) return;
 
-      updates[`${DB_KEY}/${newId}`] = {
+      updates[`${DB_KEY.menuItems}/${newId}`] = {
         title: menuItem.title as string,
         id: newId,
       };
@@ -150,7 +147,7 @@ function MenuItems() {
     const updates: { [key: string]: DBMenuItem | null } = {};
 
     for (const dbItem of Object.values(dbMenuItems)) {
-      updates[`${DB_KEY}/${dbItem.id}`] =
+      updates[`${DB_KEY.menuItems}/${dbItem.id}`] =
         dbItem.id === itemToRemove.id
           ? null
           : {
@@ -162,7 +159,7 @@ function MenuItems() {
 
     const getChildrenUpdates = (item: TreeItem) => {
       for (const child of item.children as TreeItem[]) {
-        updates[`${DB_KEY}/${child.id}`] = null;
+        updates[`${DB_KEY.menuItems}/${child.id}`] = null;
         getChildrenUpdates(child);
       }
     };
@@ -174,7 +171,7 @@ function MenuItems() {
 
   const editMenuItem = async (itemToEdit: TreeItem) => {
     const updates = {
-      [`${DB_KEY}/${itemToEdit.id}`]: {
+      [`${DB_KEY.menuItems}/${itemToEdit.id}`]: {
         ...itemToEdit,
         title: editedItem,
         children: (itemToEdit?.children as TreeItem[]).map(child => child.id),
@@ -191,32 +188,32 @@ function MenuItems() {
   };
 
   const getEditButtons = (menuItem: TreeItem) => [
-    <DoneIcon
-      onClick={() => editMenuItem(menuItem)}
-      className={classes.itemAction}
-    />,
-    <HighlightOffIcon onClick={cancelEditing} className={classes.itemAction} />,
+    <IconButton onClick={() => editMenuItem(menuItem)}>
+      <DoneIcon />
+    </IconButton>,
+    <IconButton onClick={cancelEditing}>
+      <HighlightOffIcon />
+    </IconButton>,
   ];
 
   const getActionButtons = (menuItem: TreeItem) => [
-    <EditIcon
+    <IconButton
       onClick={() => {
         setEditedItemId(menuItem.id);
         setEditedItem(menuItem.title as string);
       }}
-      className={classes.itemAction}
-    />,
-    <DeleteIcon
-      onClick={() => removeMenuItem(menuItem)}
-      className={classes.itemAction}
-    />,
+    >
+      <EditIcon />
+    </IconButton>,
+    <IconButton onClick={() => removeMenuItem(menuItem)}>
+      <DeleteIcon />
+    </IconButton>,
   ];
 
   return (
     <>
       <Box mb={3} display="flex" justifyContent="space-between">
         <TextField
-          id="outlined-basic"
           label="Пункт меню"
           variant="outlined"
           className={classes.createMenuItemInput}

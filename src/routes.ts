@@ -1,4 +1,5 @@
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
+import Work from '@material-ui/icons/Work';
 
 export interface AppRoute {
   icon: any;
@@ -19,5 +20,11 @@ export const ROUTES: { [key: string]: AppRoute } = {
     title: 'Пункти меню',
     showInDrawer: true,
     icon: ClassRoundedIcon,
+  },
+  partners: {
+    path: '/partners',
+    title: 'Друзі та партнери',
+    showInDrawer: true,
+    icon: Work,
   },
 };
