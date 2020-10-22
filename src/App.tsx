@@ -1,9 +1,12 @@
 import {
+  createMuiTheme,
   createStyles,
   CssBaseline,
   makeStyles,
   Theme,
+  ThemeProvider,
 } from '@material-ui/core';
+import { ukUA } from '@material-ui/core/locale';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
@@ -11,6 +14,8 @@ import AppToolbar from './AppToolbar';
 import MenuItems from './MenuItems/MenuItems';
 import Partners from './Partners/Partners';
 import { ROUTES } from './routes';
+
+const theme = createMuiTheme({}, ukUA);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,34 +39,36 @@ function App() {
   const handleDrawerClose = () => setDrawerOpen(false);
 
   return (
-    <div className={classes.root}>
-      <Router>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Router>
+          <CssBaseline />
 
-        <AppToolbar
-          isDrawerOpen={isDrawerOpen}
-          handleDrawerOpen={handleDrawerOpen}
-        />
+          <AppToolbar
+            isDrawerOpen={isDrawerOpen}
+            handleDrawerOpen={handleDrawerOpen}
+          />
 
-        <AppDrawer isOpen={isDrawerOpen} onClose={handleDrawerClose} />
+          <AppDrawer isOpen={isDrawerOpen} onClose={handleDrawerClose} />
 
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
 
-          <Switch>
-            <Route exact path={ROUTES.default.path} />
+            <Switch>
+              <Route exact path={ROUTES.default.path} />
 
-            <Route exact path={ROUTES.menuItems.path}>
-              <MenuItems />
-            </Route>
+              <Route exact path={ROUTES.menuItems.path}>
+                <MenuItems />
+              </Route>
 
-            <Route exact path={ROUTES.partners.path}>
-              <Partners />
-            </Route>
-          </Switch>
-        </main>
-      </Router>
-    </div>
+              <Route exact path={ROUTES.partners.path}>
+                <Partners />
+              </Route>
+            </Switch>
+          </main>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
