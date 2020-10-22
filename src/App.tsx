@@ -11,9 +11,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
 import AppToolbar from './AppToolbar';
+import ScrollTop from './components/ScrollTop';
 import MenuItems from './MenuItems/MenuItems';
 import Partners from './Partners/Partners';
 import { ROUTES } from './routes';
+
+const backToTopAnchorId = 'back-to-top-anchor';
 
 const theme = createMuiTheme({}, ukUA);
 
@@ -54,6 +57,8 @@ function App() {
           <main className={classes.content}>
             <div className={classes.toolbar} />
 
+            <div id={backToTopAnchorId} />
+
             <Switch>
               <Route exact path={ROUTES.default.path} />
 
@@ -67,6 +72,8 @@ function App() {
             </Switch>
           </main>
         </Router>
+
+        <ScrollTop anchorId={backToTopAnchorId} />
       </div>
     </ThemeProvider>
   );
