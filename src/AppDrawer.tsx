@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
+      width: theme.spacing(7),
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
+        width: theme.spacing(9),
       },
     },
     toolbar: {
@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'flex-end',
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
+    },
+    routes: {
+      padding: theme.spacing(1),
     },
   }),
 );
@@ -100,7 +103,7 @@ export default function AppDrawer({ isOpen, onClose }: Props) {
 
       <Divider />
 
-      <List>
+      <List className={classes.routes}>
         {Object.values(ROUTES)
           .filter(route => route.showInDrawer)
           .map(route => (
