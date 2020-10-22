@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import clsx from 'clsx';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute, ROUTES } from './routes';
+import { AppRoute, ROUTES } from '../routes';
 
 const drawerWidth = 240;
 

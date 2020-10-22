@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ROUTES } from './routes';
+import { ROUTES } from '../routes';
 
 const drawerWidth = 240;
 

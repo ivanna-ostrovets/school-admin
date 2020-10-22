@@ -9,8 +9,8 @@ import {
 import { ukUA } from '@material-ui/core/locale';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AppDrawer from './AppDrawer';
-import AppToolbar from './AppToolbar';
+import AppDrawer from './components/AppDrawer';
+import AppToolbar from './components/AppToolbar';
 import ScrollTop from './components/ScrollTop';
 import MenuItems from './features/MenuItems/MenuItems';
 import Partners from './features/Partners/Partners';
