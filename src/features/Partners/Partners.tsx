@@ -9,8 +9,8 @@ import {
   Theme,
 } from '@material-ui/core';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
-import { DB_KEY } from '../databaseKeys';
-import { db } from '../firebaseService';
+import { DB_KEY } from '../../databaseKeys';
+import { db } from '../../firebaseService';
 import Partner from './Partner';
 import { PartnerType, UnsavedPartner } from './types';
 

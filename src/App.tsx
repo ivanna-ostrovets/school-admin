@@ -12,8 +12,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppDrawer from './AppDrawer';
 import AppToolbar from './AppToolbar';
 import ScrollTop from './components/ScrollTop';
-import MenuItems from './MenuItems/MenuItems';
-import Partners from './Partners/Partners';
+import MenuItems from './features/MenuItems/MenuItems';
+import Partners from './features/Partners/Partners';
 import { ROUTES } from './routes';
 
 const backToTopAnchorId = 'back-to-top-anchor';

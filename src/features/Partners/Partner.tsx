@@ -12,8 +12,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React, { KeyboardEvent, useState } from 'react';
-import { DB_KEY } from '../databaseKeys';
-import { db } from '../firebaseService';
+import { DB_KEY } from '../../databaseKeys';
+import { db } from '../../firebaseService';
 import { PartnerType } from './types';
 
 function Partner({ partner }: { partner: PartnerType }) {

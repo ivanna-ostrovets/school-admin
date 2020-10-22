@@ -14,8 +14,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 import SortableTreeTheme from 'react-sortable-tree-theme-minimal';
-import { DB_KEY } from '../databaseKeys';
-import { db } from '../firebaseService';
+import { DB_KEY } from '../../databaseKeys';
+import { db } from '../../firebaseService';
 import MenuItem from './MenuItem/MenuItem';
 import './sortableTreeOverrides.css';
 
