@@ -1,0 +1,15 @@
+:root {
+  --border: 1px solid rgba(0, 0, 0, 0.23);
+  --border-radius: 4px;
+}
+
+.ck-toolbar {
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+  border: var(--border) !important;
+}
+
+.ck.ck-content {
+  border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+  border: var(--border) !important;
+  border-top: none !important;
+}

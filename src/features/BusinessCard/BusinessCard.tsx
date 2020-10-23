@@ -1,4 +1,3 @@
-import '@ckeditor/ckeditor5-build-classic/build/translations/uk';
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';

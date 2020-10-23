@@ -1,4 +1,3 @@
-import '@ckeditor/ckeditor5-build-classic/build/translations/uk';
 import {
   Box,
   Button,
@@ -9,7 +8,7 @@ import {
   Theme,
 } from '@material-ui/core';
 import React from 'react';
-import TextEditor from '../TextEditor';
+import TextEditor from '../TextEditor/TextEditor';
 import { SectionType } from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
