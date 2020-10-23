@@ -9,6 +9,7 @@ import {
 import { ukUA } from '@material-ui/core/locale';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import BusinessCard from './features/BusinessCard/BusinessCard';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollTop from './components/ScrollTop';
@@ -68,6 +69,10 @@ function App() {
 
               <Route exact path={ROUTES.partners.path}>
                 <Partners />
+              </Route>
+
+              <Route exact path={ROUTES.businessCard.path}>
+                <BusinessCard />
               </Route>
             </Switch>
           </main>

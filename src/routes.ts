@@ -1,3 +1,4 @@
+import Business from '@material-ui/icons/Business';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import Work from '@material-ui/icons/Work';
 
@@ -26,5 +27,11 @@ export const ROUTES: { [key: string]: AppRoute } = {
     title: 'Друзі та партнери',
     showInDrawer: true,
     icon: Work,
+  },
+  businessCard: {
+    path: '/businessCard',
+    title: 'Візитка',
+    showInDrawer: true,
+    icon: Business,
   },
 };
