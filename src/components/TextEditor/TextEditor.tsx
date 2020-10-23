@@ -1,8 +1,61 @@
-import DocumentEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/uk';
-import CKEditor from '@ckeditor/ckeditor5-react';
+import { Editor } from '@tinymce/tinymce-react';
 import React from 'react';
-import './CKEditorOverrides.css';
+import './TinyMCEOverrides.css';
+
+const plugins = [
+  'autoresize',
+  'paste',
+  'searchreplace',
+  'code',
+  'image',
+  'link',
+  'table',
+  'charmap',
+  'nonbreaking',
+  'advlist',
+  'lists',
+  'wordcount',
+  'imagetools',
+  'help',
+  'quickbars',
+  'emoticons',
+];
+
+const toolbar = [
+  'undo',
+  'redo',
+  '|',
+  'bold',
+  'italic',
+  'underline',
+  'strikethrough',
+  '|',
+  'formatselect',
+  '|',
+  'alignleft',
+  'aligncenter',
+  'alignright',
+  'alignjustify',
+  '|',
+  'outdent',
+  'indent',
+  '|',
+  'numlist',
+  'bullist',
+  '|',
+  'forecolor',
+  'backcolor',
+  'removeformat',
+  '|',
+  'charmap',
+  'emoticons',
+  'image',
+  'link',
+  'table',
+  '|',
+  'code',
+  'help',
+];
 
 function TextEditor({
   data,
@@ -12,19 +65,20 @@ function TextEditor({
   onChange: (data: string) => void;
 }) {
   return (
-    <CKEditor
-      onInit={(editor: any) => {
-        editor.ui
-          .getEditableElement()
-          .parentElement.insertBefore(
-            editor.ui.view.toolbar.element,
-            editor.ui.getEditableElement(),
-          );
+    <Editor
+      apiKey={process.env.REACT_APP_TEXT_EDITOR_API_KEY}
+      initialValue={data}
+      init={{
+        plugins: plugins.join(' '),
+        menubar: 'edit insert format tools',
+        toolbar: toolbar.join(' '),
+        quickbars_selection_toolbar:
+          'bold italic | quicklink h2 h3 blockquote quicktable',
+        toolbar_mode: 'wrap',
+        contextmenu: 'copy paste link image imagetools table',
+        language: 'uk',
       }}
-      editor={DocumentEditor}
-      config={{ language: 'uk' }}
-      data={data}
-      onChange={async (event: any, editor: any) => onChange(editor.getData())}
+      onEditorChange={content => onChange(content)}
     />
   );
 }
