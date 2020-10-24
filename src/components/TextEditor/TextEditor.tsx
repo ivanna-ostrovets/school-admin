@@ -78,7 +78,7 @@ function TextEditor({
         contextmenu: 'copy paste link image imagetools table',
         language: 'uk',
       }}
-      onEditorChange={content => onChange(content)}
+      onEditorChange={content => onChange(content.replace(/\n/g, ''))}
     />
   );
 }

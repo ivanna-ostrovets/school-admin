@@ -9,12 +9,13 @@ import {
 import { ukUA } from '@material-ui/core/locale';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import BusinessCard from './features/BusinessCard/BusinessCard';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollTop from './components/ScrollTop';
+import BusinessCard from './features/BusinessCard/BusinessCard';
 import MenuItems from './features/MenuItems/MenuItems';
 import Partners from './features/Partners/Partners';
+import Talents from './features/Talents/Talents';
 import { ROUTES } from './routes';
 
 const backToTopAnchorId = 'back-to-top-anchor';
@@ -73,6 +74,10 @@ function App() {
 
               <Route exact path={ROUTES.businessCard.path}>
                 <BusinessCard />
+              </Route>
+
+              <Route exact path={ROUTES.talents.path}>
+                <Talents />
               </Route>
             </Switch>
           </main>

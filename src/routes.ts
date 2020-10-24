@@ -1,5 +1,6 @@
 import Business from '@material-ui/icons/Business';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
+import Grade from '@material-ui/icons/Grade';
 import Work from '@material-ui/icons/Work';
 
 export interface AppRoute {
@@ -33,5 +34,11 @@ export const ROUTES: { [key: string]: AppRoute } = {
     title: 'Візитка',
     showInDrawer: true,
     icon: Business,
+  },
+  talents: {
+    path: '/talents',
+    title: 'Вернісаж талантів',
+    showInDrawer: true,
+    icon: Grade,
   },
 };
