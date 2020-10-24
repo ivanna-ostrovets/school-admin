@@ -6,7 +6,8 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Prompt } from 'react-router-dom';
 import ElevationScroll from '../ElevationScroll';
 import Section from './Section';
 import { SectionType } from './types';
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-// TODO: alert when leaving without change
+// TODO: remove word Icon from icon names
 // TODO: expand/collapse sections
 function SectionsPage({
   isDataChanged,
@@ -44,6 +45,21 @@ function SectionsPage({
   children?: React.ReactNode;
 }) {
   const classes = useStyles();
+
+  useEffect(() => {
+    const showPrompt = async (event: any) => {
+      if (isDataChanged) {
+        event.preventDefault();
+        event.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', showPrompt);
+
+    return () => {
+      window.removeEventListener('beforeunload', showPrompt);
+    };
+  }, [isDataChanged]);
 
   const addNewSection = () => {
     setSections(prevSections => [...prevSections, { title: '', text: '' }]);
@@ -87,6 +103,11 @@ function SectionsPage({
           sectionsCount={sections.length}
         />
       ))}
+
+      <Prompt
+        when={isDataChanged}
+        message="Ви впевнені, що хочете залишити сторінку? У вас є незбережені зміни!"
+      />
     </Box>
   );
 }
