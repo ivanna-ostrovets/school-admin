@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+// TODO: alert when leaving without change
+// TODO: expand/collapse sections
 function SectionsPage({
   isDataChanged,
   sections,
@@ -70,9 +72,11 @@ function SectionsPage({
 
       {children}
 
-      <Box mb={2} mx={-3}>
-        <Divider />
-      </Box>
+      {children && (
+        <Box mb={2} mx={-3}>
+          <Divider />
+        </Box>
+      )}
 
       {Object.values(sections).map((section, index) => (
         <Section

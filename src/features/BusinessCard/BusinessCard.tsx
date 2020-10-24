@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import sanitizeHtml from 'sanitize-html';
+import xss from 'xss';
 import SectionsPage from '../../components/Sections/SectionsPage';
 import { SectionType } from '../../components/Sections/types';
 import { DB_KEY } from '../../databaseKeys';
@@ -41,10 +41,6 @@ function BusinessCard() {
       const data: BusinessCardType = snapshot.val() || {};
 
       setDbCard(data);
-
-      setTitle(data.title || '');
-      setSubtitle(data.subtitle || '');
-      setSections(data.sections ? Object.values(data.sections) : []);
     });
   }, []);
 
@@ -62,7 +58,7 @@ function BusinessCard() {
       [DB_KEY.businessCardSubtitle]: subtitle,
       [DB_KEY.businessCardSections]: sections.map(section => ({
         title: section.title,
-        text: sanitizeHtml(section.text),
+        text: xss(section.text),
       })),
     });
 

@@ -18,8 +18,8 @@
     "react-scripts": "^3.4.4",
     "react-sortable-tree": "^2.8.0",
     "react-sortable-tree-theme-minimal": "0.0.14",
-    "sanitize-html": "^2.1.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.162",
@@ -28,7 +28,6 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-sortable-tree": "^0.3.12",
-    "@types/sanitize-html": "^1.27.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.2",
     "prettier": "^2.1.2"
