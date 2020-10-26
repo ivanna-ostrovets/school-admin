@@ -48,6 +48,7 @@ function Section({
         <AccordionSummary expandIcon={<ExpandMore />}>
           <Box display="flex" flexGrow={1}>
             <TextField
+              autoFocus={!section.title}
               fullWidth
               label="Заголовок секції"
               className={classes.marginRight}
