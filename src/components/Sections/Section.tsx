@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   createStyles,
@@ -7,18 +10,21 @@ import {
   TextField,
   Theme,
 } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import TextEditor from '../TextEditor/TextEditor';
 import { SectionType } from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    marginBottom: {
-      marginBottom: theme.spacing(2),
+    marginRight: {
+      marginRight: theme.spacing(2),
+    },
+    accordion: {
+      padding: theme.spacing(2),
     },
   }),
 );
-
 function Section({
   index,
   sectionsCount,
@@ -34,48 +40,59 @@ function Section({
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box alignSelf="flex-end" mb={2}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            setSections(prevSections => [
-              ...prevSections.slice(0, index),
-              ...prevSections.slice(index + 1),
-            ]);
-          }}
-        >
-          Видалити секцію
-        </Button>
-      </Box>
+      <Accordion
+        expanded={!section.text && !section.title}
+        TransitionProps={{ unmountOnExit: true }}
+        className={classes.accordion}
+      >
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Box display="flex" flexGrow={1}>
+            <TextField
+              fullWidth
+              label="Заголовок секції"
+              className={classes.marginRight}
+              value={section.title}
+              onClick={event => event.stopPropagation()}
+              onChange={e => {
+                const title = e.target.value;
 
-      <TextField
-        fullWidth
-        label="Заголовок секції"
-        variant="outlined"
-        className={classes.marginBottom}
-        value={section.title}
-        onChange={e => {
-          const title = e.target.value;
+                setSections(prevSections => [
+                  ...prevSections.slice(0, index),
+                  { ...section, title },
+                  ...prevSections.slice(index + 1),
+                ]);
+              }}
+            />
 
-          setSections(prevSections => [
-            ...prevSections.slice(0, index),
-            { ...section, title },
-            ...prevSections.slice(index + 1),
-          ]);
-        }}
-      />
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.marginRight}
+              onClick={() => {
+                setSections(prevSections => [
+                  ...prevSections.slice(0, index),
+                  ...prevSections.slice(index + 1),
+                ]);
+              }}
+            >
+              Видалити
+            </Button>
+          </Box>
+        </AccordionSummary>
 
-      <TextEditor
-        data={section.text}
-        onChange={text =>
-          setSections(prevSections => [
-            ...prevSections.slice(0, index),
-            { ...section, text },
-            ...prevSections.slice(index + 1),
-          ])
-        }
-      />
+        <AccordionDetails>
+          <TextEditor
+            data={section.text}
+            onChange={text =>
+              setSections(prevSections => [
+                ...prevSections.slice(0, index),
+                { ...section, text },
+                ...prevSections.slice(index + 1),
+              ])
+            }
+          />
+        </AccordionDetails>
+      </Accordion>
 
       {index + 1 !== sectionsCount && (
         <Box my={3} mx={-3}>

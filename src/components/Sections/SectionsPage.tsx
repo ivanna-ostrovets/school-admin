@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 // TODO: remove word Icon from icon names
-// TODO: expand/collapse sections
 function SectionsPage({
   isDataChanged,
   sections,
