@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
 function Section({
   index,
   sectionsCount,

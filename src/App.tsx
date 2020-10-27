@@ -5,17 +5,19 @@ import {
   makeStyles,
   Theme,
   ThemeProvider,
+  Toolbar,
 } from '@material-ui/core';
 import { ukUA } from '@material-ui/core/locale';
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollTop from './components/ScrollTop';
-import BusinessCard from './features/BusinessCard/BusinessCard';
-import MenuItems from './features/MenuItems/MenuItems';
-import Partners from './features/Partners/Partners';
-import Talents from './features/Talents/Talents';
 import { ROUTES } from './routes';
 
 const backToTopAnchorId = 'back-to-top-anchor';
@@ -31,54 +33,37 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-    toolbar: theme.mixins.toolbar,
   }),
 );
 
 function App() {
   const classes = useStyles();
-  const [isDrawerOpen, setDrawerOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => setDrawerOpen(true);
-
-  const handleDrawerClose = () => setDrawerOpen(false);
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
+        <CssBaseline />
+
         <Router>
-          <CssBaseline />
+          <AppDrawer />
 
-          <AppToolbar
-            isDrawerOpen={isDrawerOpen}
-            handleDrawerOpen={handleDrawerOpen}
-          />
-
-          <AppDrawer isOpen={isDrawerOpen} onClose={handleDrawerClose} />
+          <AppToolbar />
 
           <main className={classes.content}>
-            <div className={classes.toolbar} />
+            <Toolbar />
 
             <div id={backToTopAnchorId} />
 
             <Switch>
-              <Route exact path={ROUTES.default.path} />
-
-              <Route exact path={ROUTES.menuItems.path}>
-                <MenuItems />
+              <Route exact path={'/'}>
+                <Redirect to={ROUTES.menuItems.path} />
               </Route>
 
-              <Route exact path={ROUTES.partners.path}>
-                <Partners />
-              </Route>
-
-              <Route exact path={ROUTES.businessCard.path}>
-                <BusinessCard />
-              </Route>
-
-              <Route exact path={ROUTES.talents.path}>
-                <Talents />
-              </Route>
+              {Object.values(ROUTES).map(({ path, component }) => (
+                <Route exact path={path} key={path}>
+                  {component}
+                </Route>
+              ))}
             </Switch>
           </main>
         </Router>

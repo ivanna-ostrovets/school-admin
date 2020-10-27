@@ -2,43 +2,47 @@ import Business from '@material-ui/icons/Business';
 import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
 import Grade from '@material-ui/icons/Grade';
 import Work from '@material-ui/icons/Work';
+import React from 'react';
+import BusinessCard from './features/BusinessCard/BusinessCard';
+import MenuItems from './features/MenuItems/MenuItems';
+import Partners from './features/Partners/Partners';
+import Talents from './features/Talents/Talents';
 
-export interface AppRoute {
+interface AppRoute {
   icon: any;
   path: string;
   title: string;
-  showInDrawer: boolean;
+  component: JSX.Element;
 }
 
-export const ROUTES: { [key: string]: AppRoute } = {
-  default: {
-    path: '/',
-    title: '',
-    showInDrawer: false,
-    icon: '',
-  },
+export const ROUTES: {
+  menuItems: AppRoute;
+  partners: AppRoute;
+  businessCard: AppRoute;
+  talents: AppRoute;
+} = {
   menuItems: {
     path: '/menu-items',
     title: 'Пункти меню',
-    showInDrawer: true,
     icon: ClassRoundedIcon,
+    component: <MenuItems />,
   },
   partners: {
     path: '/partners',
     title: 'Друзі та партнери',
-    showInDrawer: true,
     icon: Work,
+    component: <Partners />,
   },
   businessCard: {
     path: '/businessCard',
     title: 'Візитка',
-    showInDrawer: true,
     icon: Business,
+    component: <BusinessCard />,
   },
   talents: {
     path: '/talents',
     title: 'Вернісаж талантів',
-    showInDrawer: true,
     icon: Grade,
+    component: <Talents />,
   },
 };

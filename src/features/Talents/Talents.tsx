@@ -34,6 +34,7 @@ function Talents() {
       })),
     });
   };
+
   return (
     <SectionsPage
       isDataChanged={isDataChanged}
