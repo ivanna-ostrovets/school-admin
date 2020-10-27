@@ -55,7 +55,7 @@ function App() {
             <div id={backToTopAnchorId} />
 
             <Switch>
-              <Route exact path={'/'}>
+              <Route path="/*">
                 <Redirect to={ROUTES.menuItems.path} />
               </Route>
 
