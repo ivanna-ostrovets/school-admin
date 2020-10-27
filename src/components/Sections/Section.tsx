@@ -41,7 +41,7 @@ function Section({
   return (
     <Box display="flex" flexDirection="column">
       <Accordion
-        expanded={!section.text && !section.title}
+        defaultExpanded={!section.text && !section.title}
         TransitionProps={{ unmountOnExit: true }}
         className={classes.accordion}
       >
