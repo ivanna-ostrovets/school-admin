@@ -5,20 +5,12 @@ import './TinyMCEOverrides.css';
 const plugins = [
   'autoresize',
   'paste',
-  'searchreplace',
   'code',
-  'image',
   'link',
   'table',
-  'charmap',
-  'nonbreaking',
-  'advlist',
   'lists',
-  'wordcount',
-  'imagetools',
   'help',
   'quickbars',
-  'emoticons',
 ];
 
 const toolbar = [
@@ -29,6 +21,8 @@ const toolbar = [
   'italic',
   'underline',
   'strikethrough',
+  '|',
+  'removeformat',
   '|',
   'formatselect',
   '|',
@@ -43,18 +37,9 @@ const toolbar = [
   'numlist',
   'bullist',
   '|',
-  'forecolor',
-  'backcolor',
-  'removeformat',
-  '|',
-  'charmap',
-  'emoticons',
-  'image',
   'link',
   'table',
-  '|',
   'code',
-  'help',
 ];
 
 function TextEditor({
@@ -70,7 +55,7 @@ function TextEditor({
       initialValue={data}
       init={{
         plugins: plugins.join(' '),
-        menubar: 'edit insert format tools',
+        menubar: 'edit format',
         toolbar: toolbar.join(' '),
         quickbars_selection_toolbar:
           'bold italic | quicklink h2 h3 blockquote quicktable',
@@ -78,7 +63,7 @@ function TextEditor({
         contextmenu: 'copy paste link image imagetools table',
         language: 'uk',
       }}
-      onEditorChange={content => onChange(content.replace(/\n/g, ''))}
+      onEditorChange={onChange}
     />
   );
 }

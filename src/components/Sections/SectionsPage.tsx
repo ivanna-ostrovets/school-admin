@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-// TODO: remove word Icon from icon names
 function SectionsPage({
   isDataChanged,
   sections,
@@ -41,12 +40,12 @@ function SectionsPage({
   sections: SectionType[];
   setSections: React.Dispatch<React.SetStateAction<SectionType[]>>;
   saveData: () => void;
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNodeArray;
 }) {
   const classes = useStyles();
 
   useEffect(() => {
-    const showPrompt = async (event: any) => {
+    const showPrompt = async (event: BeforeUnloadEvent) => {
       if (isDataChanged) {
         event.preventDefault();
         event.returnValue = '';
@@ -93,7 +92,7 @@ function SectionsPage({
         </Box>
       )}
 
-      {Object.values(sections).map((section, index) => (
+      {sections.map((section, index) => (
         <Section
           key={`section-${index}`}
           section={section}

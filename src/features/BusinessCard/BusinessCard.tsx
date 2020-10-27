@@ -58,7 +58,7 @@ function BusinessCard() {
       [DB_KEY.businessCardSubtitle]: subtitle,
       [DB_KEY.businessCardSections]: sections.map(section => ({
         title: section.title,
-        text: xss(section.text),
+        text: xss(section.text.replace(/\n/g, '')),
       })),
     });
 
@@ -69,23 +69,21 @@ function BusinessCard() {
       setSections={setSections}
       saveData={saveBusinessCard}
     >
-      <>
-        <TextField
-          label="Заголовок"
-          variant="outlined"
-          className={classes.input}
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-        />
+      <TextField
+        label="Заголовок"
+        variant="outlined"
+        className={classes.input}
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
 
-        <TextField
-          label="Підзаголовок"
-          variant="outlined"
-          className={classes.input}
-          value={subtitle}
-          onChange={e => setSubtitle(e.target.value)}
-        />
-      </>
+      <TextField
+        label="Підзаголовок"
+        variant="outlined"
+        className={classes.input}
+        value={subtitle}
+        onChange={e => setSubtitle(e.target.value)}
+      />
     </SectionsPage>
   );
 }

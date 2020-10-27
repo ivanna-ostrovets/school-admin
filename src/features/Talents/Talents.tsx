@@ -30,7 +30,7 @@ function Talents() {
     return db.ref().update({
       [DB_KEY.talents]: talents.map(section => ({
         title: section.title,
-        text: xss(section.text),
+        text: xss(section.text.replace(/\n/g, '')),
       })),
     });
   };
