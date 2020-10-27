@@ -6,4 +6,5 @@ export enum DB_KEY {
   businessCardSubtitle = 'businessCard/subtitle',
   businessCardSections = 'businessCard/sections',
   talents = 'talents',
+  graduates = 'graduates',
 }
