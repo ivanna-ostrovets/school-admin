@@ -55,15 +55,13 @@ function App() {
             <div id={backToTopAnchorId} />
 
             <Switch>
-              <Route path="/*">
-                <Redirect to={ROUTES.menuItems.path} />
-              </Route>
-
               {Object.values(ROUTES).map(({ path, component }) => (
                 <Route exact path={path} key={path}>
                   {component}
                 </Route>
               ))}
+
+              <Redirect to={ROUTES.menuItems.path} />
             </Switch>
           </main>
         </Router>
