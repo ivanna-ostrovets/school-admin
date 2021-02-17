@@ -1,10 +1,10 @@
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import xss from 'xss';
 import SectionsPage from '../../components/Sections/SectionsPage';
 import { SectionType } from '../../components/Sections/types';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
+import { sanitizeText } from '../../utils/sanitizeText';
 
 function Talents() {
   const [talents, setTalents] = useState<SectionType[]>([]);
@@ -30,7 +30,7 @@ function Talents() {
     return db.ref().update({
       [DB_KEY.talents]: talents.map(section => ({
         title: section.title,
-        text: xss(section.text.replace(/\n/g, '')),
+        text: sanitizeText(section.text),
       })),
     });
   };

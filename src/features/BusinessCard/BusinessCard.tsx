@@ -1,11 +1,11 @@
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import xss from 'xss';
 import SectionsPage from '../../components/Sections/SectionsPage';
 import { SectionType } from '../../components/Sections/types';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
+import { sanitizeText } from '../../utils/sanitizeText';
 
 interface BusinessCardType {
   title: string;
@@ -58,7 +58,7 @@ function BusinessCard() {
       [DB_KEY.businessCardSubtitle]: subtitle,
       [DB_KEY.businessCardSections]: sections.map(section => ({
         title: section.title,
-        text: xss(section.text.replace(/\n/g, '')),
+        text: sanitizeText(section.text),
       })),
     });
 
