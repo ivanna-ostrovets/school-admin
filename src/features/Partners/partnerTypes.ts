@@ -3,6 +3,6 @@ export interface UnsavedPartner {
   url: string;
 }
 
-export interface PartnerType extends UnsavedPartner {
+export interface Partner extends UnsavedPartner {
   id: string;
 }

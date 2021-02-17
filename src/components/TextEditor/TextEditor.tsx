@@ -32,6 +32,7 @@ const toolbar = [
   'code',
 ];
 
+// TODO: rewrite global styles
 function TextEditor({
   data,
   onChange,

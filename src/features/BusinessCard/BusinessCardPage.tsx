@@ -1,16 +1,16 @@
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import SectionsPage from '../../components/Sections/SectionsPage';
-import { SectionType } from '../../components/Sections/types';
+import SectionList from '../../components/SectionList/SectionList';
+import { Section } from '../../components/SectionList/sectionTypes';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
 import { sanitizeText } from '../../utils/sanitizeText';
 
-interface BusinessCardType {
+interface BusinessCard {
   title: string;
   subtitle: string;
-  sections: SectionType[];
+  sections: Section[];
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,12 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function BusinessCard() {
+function BusinessCardPage() {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
-  const [sections, setSections] = useState<SectionType[]>([]);
-  const [dbCard, setDbCard] = useState<BusinessCardType>();
+  const [sections, setSections] = useState<Section[]>([]);
+  const [dbCard, setDbCard] = useState<BusinessCard>();
 
   const isDataChanged = Boolean(
     dbCard &&
@@ -38,7 +38,7 @@ function BusinessCard() {
 
   useEffect(() => {
     db.ref(DB_KEY.businessCard).on('value', snapshot => {
-      const data: BusinessCardType = snapshot.val() || {};
+      const data: BusinessCard = snapshot.val() || {};
 
       setDbCard(data);
     });
@@ -63,7 +63,7 @@ function BusinessCard() {
     });
 
   return (
-    <SectionsPage
+    <SectionList
       isDataChanged={isDataChanged}
       sections={sections}
       setSections={setSections}
@@ -84,8 +84,8 @@ function BusinessCard() {
         value={subtitle}
         onChange={e => setSubtitle(e.target.value)}
       />
-    </SectionsPage>
+    </SectionList>
   );
 }
 
-export default BusinessCard;
+export default BusinessCardPage;

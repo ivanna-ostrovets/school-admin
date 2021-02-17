@@ -9,8 +9,8 @@ import {
 import React, { useEffect } from 'react';
 import { Prompt } from 'react-router-dom';
 import ElevationScroll from '../ElevationScroll';
-import Section from './Section';
-import { SectionType } from './types';
+import SectionItem from './SectionItem';
+import { Section } from './sectionTypes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function SectionsPage({
+function SectionList({
   isDataChanged,
   sections,
   setSections,
@@ -37,8 +37,8 @@ function SectionsPage({
   children,
 }: {
   isDataChanged: boolean;
-  sections: SectionType[];
-  setSections: React.Dispatch<React.SetStateAction<SectionType[]>>;
+  sections: Section[];
+  setSections: React.Dispatch<React.SetStateAction<Section[]>>;
   saveData: () => void;
   children?: React.ReactNode | React.ReactNodeArray;
 }) {
@@ -93,7 +93,7 @@ function SectionsPage({
       )}
 
       {sections.map((section, index) => (
-        <Section
+        <SectionItem
           key={`section-${index}`}
           section={section}
           setSections={setSections}
@@ -110,4 +110,4 @@ function SectionsPage({
   );
 }
 
-export default SectionsPage;
+export default SectionList;

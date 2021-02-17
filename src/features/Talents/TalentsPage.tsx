@@ -1,14 +1,14 @@
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import SectionsPage from '../../components/Sections/SectionsPage';
-import { SectionType } from '../../components/Sections/types';
+import SectionList from '../../components/SectionList/SectionList';
+import { Section } from '../../components/SectionList/sectionTypes';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
 import { sanitizeText } from '../../utils/sanitizeText';
 
-function Talents() {
-  const [talents, setTalents] = useState<SectionType[]>([]);
-  const [dbTalents, setDbTalents] = useState<SectionType[]>([]);
+function TalentsPage() {
+  const [talents, setTalents] = useState<Section[]>([]);
+  const [dbTalents, setDbTalents] = useState<Section[]>([]);
 
   const isDataChanged = Boolean(
     dbTalents && talents && !isEqual(talents, dbTalents),
@@ -16,7 +16,7 @@ function Talents() {
 
   useEffect(() => {
     db.ref(DB_KEY.talents).on('value', snapshot => {
-      const data: SectionType[] = snapshot.val() || [];
+      const data: Section[] = snapshot.val() || [];
 
       setDbTalents(data);
     });
@@ -36,7 +36,7 @@ function Talents() {
   };
 
   return (
-    <SectionsPage
+    <SectionList
       isDataChanged={isDataChanged}
       sections={talents}
       setSections={setTalents}
@@ -45,4 +45,4 @@ function Talents() {
   );
 }
 
-export default Talents;
+export default TalentsPage;

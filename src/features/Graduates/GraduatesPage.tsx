@@ -1,14 +1,14 @@
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
-import SectionsPage from '../../components/Sections/SectionsPage';
-import { SectionType } from '../../components/Sections/types';
+import SectionList from '../../components/SectionList/SectionList';
+import { Section } from '../../components/SectionList/sectionTypes';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
 import { sanitizeText } from '../../utils/sanitizeText';
 
-function Graduates() {
-  const [graduates, setGraduates] = useState<SectionType[]>([]);
-  const [dbGraduates, setDbGraduates] = useState<SectionType[]>([]);
+function GraduatesPage() {
+  const [graduates, setGraduates] = useState<Section[]>([]);
+  const [dbGraduates, setDbGraduates] = useState<Section[]>([]);
 
   const isDataChanged = Boolean(
     dbGraduates && graduates && !isEqual(graduates, dbGraduates),
@@ -16,7 +16,7 @@ function Graduates() {
 
   useEffect(() => {
     db.ref(DB_KEY.graduates).on('value', snapshot => {
-      const data: SectionType[] = snapshot.val() || [];
+      const data: Section[] = snapshot.val() || [];
 
       setDbGraduates(data);
     });
@@ -36,7 +36,7 @@ function Graduates() {
   };
 
   return (
-    <SectionsPage
+    <SectionList
       isDataChanged={isDataChanged}
       sections={graduates}
       setSections={setGraduates}
@@ -45,4 +45,4 @@ function Graduates() {
   );
 }
 
-export default Graduates;
+export default GraduatesPage;

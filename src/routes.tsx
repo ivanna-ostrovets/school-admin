@@ -4,11 +4,11 @@ import GradeIcon from '@material-ui/icons/Grade';
 import SchoolIcon from '@material-ui/icons/School';
 import WorkIcon from '@material-ui/icons/Work';
 import React from 'react';
-import BusinessCard from './features/BusinessCard/BusinessCard';
-import Graduates from './features/Graduates/Graduates';
-import MenuItems from './features/MenuItems/MenuItems';
-import Partners from './features/Partners/Partners';
-import Talents from './features/Talents/Talents';
+import BusinessCardPage from './features/BusinessCard/BusinessCardPage';
+import GraduatesPage from './features/Graduates/GraduatesPage';
+import CategoriesPage from './features/Categories/CategoriesPage';
+import PartnersPage from './features/Partners/PartnersPage';
+import TalentsPage from './features/Talents/TalentsPage';
 
 interface AppRoute {
   icon: any;
@@ -28,30 +28,30 @@ export const ROUTES: {
     path: '/menu-items',
     title: 'Пункти меню',
     icon: ClassRoundedIcon,
-    component: <MenuItems />,
+    component: <CategoriesPage />,
   },
   partners: {
     path: '/partners',
     title: 'Друзі та партнери',
     icon: WorkIcon,
-    component: <Partners />,
+    component: <PartnersPage />,
   },
   businessCard: {
     path: '/businessCard',
     title: 'Візитка',
     icon: BusinessIcon,
-    component: <BusinessCard />,
+    component: <BusinessCardPage />,
   },
   talents: {
     path: '/talents',
     title: 'Вернісаж талантів',
     icon: GradeIcon,
-    component: <Talents />,
+    component: <TalentsPage />,
   },
   graduates: {
     path: '/graduates',
     title: 'Наші випускники',
     icon: SchoolIcon,
-    component: <Graduates />,
+    component: <GraduatesPage />,
   },
 };

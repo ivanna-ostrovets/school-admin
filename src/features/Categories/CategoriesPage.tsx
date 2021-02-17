@@ -16,10 +16,9 @@ import SortableTree, { TreeItem } from 'react-sortable-tree';
 import SortableTreeTheme from 'react-sortable-tree-theme-minimal';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
-import MenuItem from './MenuItem/MenuItem';
-import './sortableTreeOverrides.css';
+import CategoryItem from './CategoryItem/CategoryItem';
 
-export interface DBMenuItem {
+export interface Category {
   id: string;
   title: string;
   children?: string[];
@@ -34,16 +33,30 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuItemsTree: {
       height: 750,
+      '@global': {
+        '.ReactVirtualized__Grid': {
+          outline: 'none !important',
+        },
+        '.rstcustom__highlight': {
+          background: 'none !important',
+        },
+        '.rstcustom__node': {
+          height: '62px !important',
+        },
+        '.rstcustom__nodeContent': {
+          width: '100%',
+        },
+      },
     },
   }),
 );
 
-function MenuItems() {
+function CategoriesPage() {
   const classes = useStyles();
   const [newMenuItem, setNewMenuItem] = useState('');
   const [menuItems, setMenuItems] = useState<TreeItem[]>([]);
   const [dbMenuItems, setDbMenuItems] = useState<{
-    [key: string]: DBMenuItem;
+    [key: string]: Category;
   }>({});
   const [editedItemId, setEditedItemId] = useState('');
   const [editedItem, setEditedItem] = useState('');
@@ -59,7 +72,7 @@ function MenuItems() {
 
     if (!dbMenuItems) return;
 
-    const transformFromBackend = (menuItem: DBMenuItem): TreeItem => ({
+    const transformFromBackend = (menuItem: Category): TreeItem => ({
       ...menuItem,
       children:
         menuItem.children?.map(id => transformFromBackend(dbMenuItems[id])) ||
@@ -95,7 +108,7 @@ function MenuItems() {
   };
 
   const saveOrder = () => {
-    const updates: { [key: string]: DBMenuItem } = {};
+    const updates: { [key: string]: Category } = {};
 
     const addChildrenUpdates = (parentId: string, item: TreeItem) => {
       if (!item.children) return;
@@ -144,7 +157,7 @@ function MenuItems() {
   };
 
   const removeMenuItem = (itemToRemove: TreeItem) => {
-    const updates: { [key: string]: DBMenuItem | null } = {};
+    const updates: { [key: string]: Category | null } = {};
 
     for (const dbItem of Object.values(dbMenuItems)) {
       updates[`${DB_KEY.menuItems}/${dbItem.id}`] =
@@ -249,7 +262,7 @@ function MenuItems() {
               editedItem,
               setEditedItem,
             })}
-            nodeContentRenderer={props => <MenuItem {...props} />}
+            nodeContentRenderer={props => <CategoryItem {...props} />}
           />
         </div>
       )}
@@ -257,4 +270,4 @@ function MenuItems() {
   );
 }
 
-export default MenuItems;
+export default CategoriesPage;

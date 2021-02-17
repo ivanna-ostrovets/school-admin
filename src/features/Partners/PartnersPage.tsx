@@ -11,8 +11,8 @@ import {
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
-import Partner from './Partner';
-import { PartnerType, UnsavedPartner } from './types';
+import PartnerItem from './PartnerItem';
+import { Partner, UnsavedPartner } from './partnerTypes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const initialPartner = { name: '', url: '' };
 
-function Partners() {
+function PartnersPage() {
   const classes = useStyles();
-  const [partners, setPartners] = useState<{ [key: string]: PartnerType }>({});
+  const [partners, setPartners] = useState<{ [key: string]: Partner }>({});
   const [newPartner, setNewPartner] = useState<UnsavedPartner>(initialPartner);
 
   const canAddPartner = newPartner.name && newPartner.url;
@@ -104,7 +104,7 @@ function Partners() {
       <List>
         {partnersToRender.map(partner => (
           <div key={partner.id}>
-            <Partner partner={partner} />
+            <PartnerItem partner={partner} />
           </div>
         ))}
       </List>
@@ -112,4 +112,4 @@ function Partners() {
   );
 }
 
-export default Partners;
+export default PartnersPage;

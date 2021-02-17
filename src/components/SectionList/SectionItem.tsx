@@ -13,7 +13,7 @@ import {
 import { ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import TextEditor from '../TextEditor/TextEditor';
-import { SectionType } from './types';
+import { Section } from './sectionTypes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function Section({
+function SectionItem({
   index,
   sectionsCount,
   section,
@@ -34,8 +34,8 @@ function Section({
 }: {
   index: number;
   sectionsCount: number;
-  section: SectionType;
-  setSections: React.Dispatch<React.SetStateAction<SectionType[]>>;
+  section: Section;
+  setSections: React.Dispatch<React.SetStateAction<Section[]>>;
 }) {
   const classes = useStyles();
 
@@ -105,4 +105,4 @@ function Section({
   );
 }
 
-export default Section;
+export default SectionItem;

@@ -14,10 +14,10 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import React, { KeyboardEvent, useState } from 'react';
 import { DB_KEY } from '../../databaseKeys';
 import { db } from '../../firebaseService';
-import { PartnerType } from './types';
+import { Partner } from './partnerTypes';
 
-function Partner({ partner }: { partner: PartnerType }) {
-  const [editedPartner, setEditedPartner] = useState<PartnerType>();
+function PartnerItem({ partner }: { partner: Partner }) {
+  const [editedPartner, setEditedPartner] = useState<Partner>();
 
   const handleEditInputKeyPress = async ({ key }: KeyboardEvent) => {
     if (key === 'Enter') {
@@ -35,7 +35,7 @@ function Partner({ partner }: { partner: PartnerType }) {
     cancelEditing();
   };
 
-  const remove = (partnerToRemove: PartnerType) =>
+  const remove = (partnerToRemove: Partner) =>
     db.ref().update({ [`${DB_KEY.partners}/${partnerToRemove.id}`]: null });
 
   const cancelEditing = () => {
@@ -110,4 +110,4 @@ function Partner({ partner }: { partner: PartnerType }) {
   );
 }
 
-export default Partner;
+export default PartnerItem;

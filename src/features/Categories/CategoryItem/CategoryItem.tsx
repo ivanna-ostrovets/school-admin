@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import React from 'react';
 import { isDescendant, NodeRendererProps } from 'react-sortable-tree';
-import styles from './MenuItems.module.css';
+import styles from './CategoryItem.module.css';
 
 interface Props extends NodeRendererProps {
   isEdited?: boolean;
@@ -12,7 +12,7 @@ interface Props extends NodeRendererProps {
   setEditedItem?: (value: string) => void;
 }
 
-function MenuItem(props: Props) {
+function CategoryItem(props: Props) {
   const {
     isEdited,
     editedItem,
@@ -142,4 +142,4 @@ function MenuItem(props: Props) {
   );
 }
 
-export default MenuItem;
+export default CategoryItem;
