@@ -11,9 +11,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import firebase from 'firebase';
 import React, { KeyboardEvent, useState } from 'react';
 import { DB_KEY } from '../../databaseKeys';
-import { db } from '../../firebaseService';
 import { Partner } from './partnerTypes';
 
 function PartnerItem({ partner }: { partner: Partner }) {
@@ -28,7 +28,8 @@ function PartnerItem({ partner }: { partner: Partner }) {
   const edit = async () => {
     if (!editedPartner) return;
 
-    await db
+    await firebase
+      .database()
       .ref()
       .update({ [`${DB_KEY.partners}/${editedPartner.id}`]: editedPartner });
 
@@ -36,7 +37,10 @@ function PartnerItem({ partner }: { partner: Partner }) {
   };
 
   const remove = (partnerToRemove: Partner) =>
-    db.ref().update({ [`${DB_KEY.partners}/${partnerToRemove.id}`]: null });
+    firebase
+      .database()
+      .ref()
+      .update({ [`${DB_KEY.partners}/${partnerToRemove.id}`]: null });
 
   const cancelEditing = () => {
     setEditedPartner(undefined);

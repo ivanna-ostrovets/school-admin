@@ -1,10 +1,10 @@
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
+import firebase from 'firebase';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
 import SectionList from '../../components/SectionList/SectionList';
 import { Section } from '../../components/SectionList/sectionTypes';
 import { DB_KEY } from '../../databaseKeys';
-import { db } from '../../firebaseService';
 import { sanitizeText } from '../../utils/sanitizeText';
 
 interface BusinessCard {
@@ -37,11 +37,14 @@ function BusinessCardPage() {
   );
 
   useEffect(() => {
-    db.ref(DB_KEY.businessCard).on('value', snapshot => {
-      const data: BusinessCard = snapshot.val() || {};
+    firebase
+      .database()
+      .ref(DB_KEY.businessCard)
+      .on('value', snapshot => {
+        const data: BusinessCard = snapshot.val() || {};
 
-      setDbCard(data);
-    });
+        setDbCard(data);
+      });
   }, []);
 
   useEffect(() => {
@@ -53,14 +56,17 @@ function BusinessCardPage() {
   }, [dbCard]);
 
   const saveBusinessCard = () =>
-    db.ref().update({
-      [DB_KEY.businessCardTitle]: title,
-      [DB_KEY.businessCardSubtitle]: subtitle,
-      [DB_KEY.businessCardSections]: sections.map(section => ({
-        title: section.title,
-        text: sanitizeText(section.text),
-      })),
-    });
+    firebase
+      .database()
+      .ref()
+      .update({
+        [DB_KEY.businessCardTitle]: title,
+        [DB_KEY.businessCardSubtitle]: subtitle,
+        [DB_KEY.businessCardSections]: sections.map(section => ({
+          title: section.title,
+          text: sanitizeText(section.text),
+        })),
+      });
 
   return (
     <SectionList

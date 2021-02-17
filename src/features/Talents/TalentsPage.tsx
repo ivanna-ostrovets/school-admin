@@ -1,9 +1,9 @@
+import firebase from 'firebase';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
 import SectionList from '../../components/SectionList/SectionList';
 import { Section } from '../../components/SectionList/sectionTypes';
 import { DB_KEY } from '../../databaseKeys';
-import { db } from '../../firebaseService';
 import { sanitizeText } from '../../utils/sanitizeText';
 
 function TalentsPage() {
@@ -15,11 +15,14 @@ function TalentsPage() {
   );
 
   useEffect(() => {
-    db.ref(DB_KEY.talents).on('value', snapshot => {
-      const data: Section[] = snapshot.val() || [];
+    firebase
+      .database()
+      .ref(DB_KEY.talents)
+      .on('value', snapshot => {
+        const data: Section[] = snapshot.val() || [];
 
-      setDbTalents(data);
-    });
+        setDbTalents(data);
+      });
   }, []);
 
   useEffect(() => {
@@ -27,12 +30,15 @@ function TalentsPage() {
   }, [dbTalents]);
 
   const saveTalents = () => {
-    return db.ref().update({
-      [DB_KEY.talents]: talents.map(section => ({
-        title: section.title,
-        text: sanitizeText(section.text),
-      })),
-    });
+    return firebase
+      .database()
+      .ref()
+      .update({
+        [DB_KEY.talents]: talents.map(section => ({
+          title: section.title,
+          text: sanitizeText(section.text),
+        })),
+      });
   };
 
   return (

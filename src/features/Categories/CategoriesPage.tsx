@@ -11,11 +11,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import firebase from 'firebase';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 import SortableTreeTheme from 'react-sortable-tree-theme-minimal';
 import { DB_KEY } from '../../databaseKeys';
-import { db } from '../../firebaseService';
 import CategoryItem from './CategoryItem/CategoryItem';
 
 export interface Category {
@@ -62,9 +62,12 @@ function CategoriesPage() {
   const [editedItem, setEditedItem] = useState('');
 
   useEffect(() => {
-    db.ref(DB_KEY.menuItems).on('value', snapshot => {
-      setDbMenuItems(snapshot.val() || {});
-    });
+    firebase
+      .database()
+      .ref(DB_KEY.menuItems)
+      .on('value', snapshot => {
+        setDbMenuItems(snapshot.val() || {});
+      });
   }, []);
 
   useEffect(() => {
@@ -92,11 +95,14 @@ function CategoriesPage() {
   const addMenuItem = async () => {
     if (!newMenuItem) return;
 
-    const newId = db.ref().child(DB_KEY.menuItems).push().key;
+    const newId = firebase.database().ref().child(DB_KEY.menuItems).push().key;
 
-    await db.ref().update({
-      [`${DB_KEY.menuItems}/${newId}`]: { title: newMenuItem, id: newId },
-    });
+    await firebase
+      .database()
+      .ref()
+      .update({
+        [`${DB_KEY.menuItems}/${newId}`]: { title: newMenuItem, id: newId },
+      });
 
     setNewMenuItem('');
   };
@@ -117,7 +123,8 @@ function CategoriesPage() {
 
       for (const child of item.children as TreeItem[]) {
         const newChildId =
-          child.id || db.ref().child(DB_KEY.menuItems).push().key;
+          child.id ||
+          firebase.database().ref().child(DB_KEY.menuItems).push().key;
 
         if (!newChildId) continue;
 
@@ -141,7 +148,9 @@ function CategoriesPage() {
     };
 
     for (const menuItem of menuItems) {
-      const newId = menuItem.id || db.ref().child(DB_KEY.menuItems).push().key;
+      const newId =
+        menuItem.id ||
+        firebase.database().ref().child(DB_KEY.menuItems).push().key;
 
       if (!newId) return;
 
@@ -153,7 +162,7 @@ function CategoriesPage() {
       addChildrenUpdates(newId, menuItem);
     }
 
-    return db.ref().update(updates);
+    return firebase.database().ref().update(updates);
   };
 
   const removeMenuItem = (itemToRemove: TreeItem) => {
@@ -179,7 +188,7 @@ function CategoriesPage() {
 
     getChildrenUpdates(itemToRemove);
 
-    return db.ref().update(updates);
+    return firebase.database().ref().update(updates);
   };
 
   const editMenuItem = async (itemToEdit: TreeItem) => {
@@ -191,7 +200,7 @@ function CategoriesPage() {
       },
     };
 
-    await db.ref().update(updates);
+    await firebase.database().ref().update(updates);
     cancelEditing();
   };
 

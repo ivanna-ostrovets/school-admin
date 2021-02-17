@@ -8,9 +8,9 @@ import {
   TextField,
   Theme,
 } from '@material-ui/core';
+import firebase from 'firebase';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { DB_KEY } from '../../databaseKeys';
-import { db } from '../../firebaseService';
 import PartnerItem from './PartnerItem';
 import { Partner, UnsavedPartner } from './partnerTypes';
 
@@ -40,9 +40,12 @@ function PartnersPage() {
   const partnersToRender = Object.values(partners);
 
   useEffect(() => {
-    db.ref(DB_KEY.partners).on('value', snapshot => {
-      setPartners(snapshot.val() || []);
-    });
+    firebase
+      .database()
+      .ref(DB_KEY.partners)
+      .on('value', snapshot => {
+        setPartners(snapshot.val() || []);
+      });
   }, []);
 
   const handleInputKeyPress = async ({ key }: KeyboardEvent) => {
@@ -54,9 +57,10 @@ function PartnersPage() {
   const add = async () => {
     if (!canAddPartner) return;
 
-    const id = db.ref().child(DB_KEY.partners).push().key;
+    const id = firebase.database().ref().child(DB_KEY.partners).push().key;
 
-    await db
+    await firebase
+      .database()
       .ref()
       .update({ [`${DB_KEY.partners}/${id}`]: { ...newPartner, id } });
 
