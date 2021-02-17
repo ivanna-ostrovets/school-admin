@@ -19,20 +19,10 @@ const toolbar = [
   '|',
   'bold',
   'italic',
-  'underline',
-  'strikethrough',
   '|',
   'removeformat',
   '|',
   'formatselect',
-  '|',
-  'alignleft',
-  'aligncenter',
-  'alignright',
-  'alignjustify',
-  '|',
-  'outdent',
-  'indent',
   '|',
   'numlist',
   'bullist',
@@ -60,8 +50,10 @@ function TextEditor({
         quickbars_selection_toolbar:
           'bold italic | quicklink h2 h3 blockquote quicktable',
         toolbar_mode: 'wrap',
-        contextmenu: 'copy paste link image imagetools table',
+        contextmenu: 'copy paste link table',
         language: 'uk',
+        keep_styles: false,
+        extended_valid_elements: 'table,tr,td',
       }}
       onEditorChange={onChange}
     />
