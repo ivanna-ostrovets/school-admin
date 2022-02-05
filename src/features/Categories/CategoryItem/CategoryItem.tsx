@@ -1,6 +1,6 @@
-import { Input } from '@material-ui/core';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Input from '@mui/material/Input';
 import clsx from 'clsx';
 import React from 'react';
 import { isDescendant, NodeRendererProps } from 'react-sortable-tree';

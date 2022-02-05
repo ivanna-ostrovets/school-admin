@@ -1,33 +1,19 @@
-import {
-  Box,
-  Button,
-  createStyles,
-  Divider,
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import React, { useEffect } from 'react';
 import { Prompt } from 'react-router-dom';
 import ElevationScroll from '../ElevationScroll';
 import SectionItem from './SectionItem';
 import { Section } from './sectionTypes';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    actionsBar: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      flexShrink: 0,
-      height: theme.spacing(8),
-      margin: `-${theme.spacing(3)}`,
-      marginBottom: theme.spacing(3),
-      paddingRight: theme.spacing(3),
-      backgroundColor: 'white',
-      boxShadow: theme.shadows[1],
-    },
-  }),
-);
+interface Props {
+  isDataChanged: boolean;
+  sections: Section[];
+  setSections: React.Dispatch<React.SetStateAction<Section[]>>;
+  saveData: () => void;
+  children?: React.ReactNode;
+}
 
 function SectionList({
   isDataChanged,
@@ -35,15 +21,7 @@ function SectionList({
   setSections,
   saveData,
   children,
-}: {
-  isDataChanged: boolean;
-  sections: Section[];
-  setSections: React.Dispatch<React.SetStateAction<Section[]>>;
-  saveData: () => void;
-  children?: React.ReactNode | React.ReactNodeArray;
-}) {
-  const classes = useStyles();
-
+}: Props) {
   useEffect(() => {
     const showPrompt = async (event: BeforeUnloadEvent) => {
       if (isDataChanged) {
@@ -66,31 +44,28 @@ function SectionList({
   return (
     <Box display="flex" flexDirection="column">
       <ElevationScroll>
-        <div className={classes.actionsBar}>
-          <Box mr={2}>
-            <Button variant="outlined" color="primary" onClick={addNewSection}>
-              Додати секцію
-            </Button>
-          </Box>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={addNewSection}
+          sx={{ mr: 2 }}
+        >
+          Додати секцію
+        </Button>
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={saveData}
-            disabled={!isDataChanged}
-          >
-            Зберегти
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={saveData}
+          disabled={!isDataChanged}
+        >
+          Зберегти
+        </Button>
       </ElevationScroll>
 
       {children}
 
-      {children && (
-        <Box mb={2} mx={-3}>
-          <Divider />
-        </Box>
-      )}
+      {children && <Divider sx={{ mb: 2, mx: -3 }} />}
 
       {sections.map((section, index) => (
         <SectionItem
@@ -98,7 +73,7 @@ function SectionList({
           section={section}
           setSections={setSections}
           index={index}
-          sectionsCount={sections.length}
+          lastItem={index + 1 === sections.length}
         />
       ))}
 

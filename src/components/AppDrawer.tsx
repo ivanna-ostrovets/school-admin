@@ -1,57 +1,38 @@
-import {
-  createStyles,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  makeStyles,
-  Theme,
-} from '@material-ui/core';
-import Toolbar from '@material-ui/core/Toolbar';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ROUTES } from '../routes';
+import { AppRoute, ROUTES } from '../routes';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    drawer: {
-      width: 240,
-      flexShrink: 0,
-    },
-    routes: {
-      padding: theme.spacing(1),
-    },
-  }),
-);
-
-function DrawerItem(props: { icon: any; path: string; title: string }) {
+function DrawerItem({ icon, path, title }: AppRoute) {
   const { pathname } = useLocation();
-  const Icon = props.icon;
+  const Icon = icon;
 
   return (
-    <Link to={props.path}>
-      <ListItem button selected={props.path === pathname}>
+    <Link to={path}>
+      <ListItem button selected={path === pathname}>
         <ListItemIcon>
           <Icon />
         </ListItemIcon>
 
-        <ListItemText primary={props.title} />
+        <ListItemText primary={title} />
       </ListItem>
     </Link>
   );
 }
 
 export default function AppDrawer() {
-  const classes = useStyles();
-
   return (
-    <Drawer className={classes.drawer} variant="permanent">
+    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0 }}>
       <Toolbar />
 
-      <List className={classes.routes}>
-        {Object.values(ROUTES).map(({ icon, path, title }) => (
-          <DrawerItem key={path} icon={icon} path={path} title={title} />
+      <List>
+        {Object.values(ROUTES).map(route => (
+          <DrawerItem {...route} key={route.path} />
         ))}
       </List>
     </Drawer>

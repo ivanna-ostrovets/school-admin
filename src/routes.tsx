@@ -1,16 +1,16 @@
-import BusinessIcon from '@material-ui/icons/Business';
-import ClassRoundedIcon from '@material-ui/icons/ClassRounded';
-import GradeIcon from '@material-ui/icons/Grade';
-import SchoolIcon from '@material-ui/icons/School';
-import WorkIcon from '@material-ui/icons/Work';
+import BusinessIcon from '@mui/icons-material/Business';
+import ClassRoundedIcon from '@mui/icons-material/ClassRounded';
+import GradeIcon from '@mui/icons-material/Grade';
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
 import React from 'react';
 import BusinessCardPage from './features/BusinessCard/BusinessCardPage';
-import GraduatesPage from './features/Graduates/GraduatesPage';
 import CategoriesPage from './features/Categories/CategoriesPage';
+import GraduatesPage from './features/Graduates/GraduatesPage';
 import PartnersPage from './features/Partners/PartnersPage';
 import TalentsPage from './features/Talents/TalentsPage';
 
-interface AppRoute {
+export interface AppRoute {
   icon: any;
   path: string;
   title: string;

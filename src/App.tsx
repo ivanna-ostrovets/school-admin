@@ -1,16 +1,10 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  createMuiTheme,
-  createStyles,
-  CssBaseline,
-  makeStyles,
-  Theme,
-  ThemeProvider,
-  Toolbar,
-} from '@material-ui/core';
-import { ukUA } from '@material-ui/core/locale';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ukUA } from '@mui/material/locale';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -20,33 +14,22 @@ import {
 } from 'react-router-dom';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
-import ScrollTop from './components/ScrollTop';
+import ScrollToAnchor from './components/ScrollToAnchor';
 import { ROUTES } from './routes';
-import { useAuth } from './useAuth';
+import { useAuth } from './utils/useAuth';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
-const theme = createMuiTheme({}, ukUA);
+const theme = createTheme({}, ukUA);
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  }),
-);
+// TODO: add scrollbar to inner content only
 
 function App() {
-  const classes = useStyles();
   const [isAuthorized, isLoadingAuth, signIn, signOut] = useAuth();
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <Box display="flex">
         <CssBaseline />
 
         <Router>
@@ -54,7 +37,7 @@ function App() {
 
           <AppToolbar isAuthorized={isAuthorized} signOut={signOut} />
 
-          <main className={classes.content}>
+          <Box sx={{ flexGrow: 1, p: 3 }}>
             <Box height="100%" width="100%">
               <Toolbar />
 
@@ -79,16 +62,16 @@ function App() {
                       </Route>
                     ))}
 
-                    <Redirect to={ROUTES.menuItems.path} />
+                    <Redirect to={ROUTES.partners.path} />
                   </>
                 )}
               </Switch>
             </Box>
-          </main>
+          </Box>
         </Router>
 
-        <ScrollTop anchorId={backToTopAnchorId} />
-      </div>
+        <ScrollToAnchor anchorId={backToTopAnchorId} />
+      </Box>
     </ThemeProvider>
   );
 }

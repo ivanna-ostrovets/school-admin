@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
+import TextField from '@mui/material/TextField';
 import firebase from 'firebase';
 import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
@@ -13,16 +13,7 @@ interface BusinessCard {
   sections: Section[];
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    input: {
-      marginBottom: theme.spacing(2),
-    },
-  }),
-);
-
 function BusinessCardPage() {
-  const classes = useStyles();
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [sections, setSections] = useState<Section[]>([]);
@@ -78,7 +69,7 @@ function BusinessCardPage() {
       <TextField
         label="Заголовок"
         variant="outlined"
-        className={classes.input}
+        sx={{ mb: 2 }}
         value={title}
         onChange={e => setTitle(e.target.value)}
       />
@@ -86,7 +77,7 @@ function BusinessCardPage() {
       <TextField
         label="Підзаголовок"
         variant="outlined"
-        className={classes.input}
+        sx={{ mb: 2 }}
         value={subtitle}
         onChange={e => setSubtitle(e.target.value)}
       />

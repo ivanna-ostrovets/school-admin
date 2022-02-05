@@ -1,22 +1,15 @@
-import {
-  Box,
-  Button,
-  createStyles,
-  IconButton,
-  makeStyles,
-  TextField,
-  Theme,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DoneIcon from '@material-ui/icons/Done';
-import EditIcon from '@material-ui/icons/Edit';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
+import EditIcon from '@mui/icons-material/Edit';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import firebase from 'firebase';
 import React, { KeyboardEvent, useEffect, useState } from 'react';
-import SortableTree, { TreeItem } from 'react-sortable-tree';
-import SortableTreeTheme from 'react-sortable-tree-theme-minimal';
+import { TreeItem as TreeItemType } from 'react-sortable-tree';
 import { DB_KEY } from '../../databaseKeys';
-import CategoryItem from './CategoryItem/CategoryItem';
 
 export interface Category {
   id: string;
@@ -25,34 +18,11 @@ export interface Category {
   parentId?: string;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    createMenuItemInput: {
-      width: '100%',
-      marginRight: theme.spacing(2),
-    },
-    menuItemsTree: {
-      height: 750,
-      '@global': {
-        '.ReactVirtualized__Grid': {
-          outline: 'none !important',
-        },
-        '.rstcustom__highlight': {
-          background: 'none !important',
-        },
-        '.rstcustom__node': {
-          height: '62px !important',
-        },
-        '.rstcustom__nodeContent': {
-          width: '100%',
-        },
-      },
-    },
-  }),
-);
+type TreeItem = TreeItemType<{ id?: string }>;
+
+// TODO: fix sortable tree
 
 function CategoriesPage() {
-  const classes = useStyles();
   const [newMenuItem, setNewMenuItem] = useState('');
   const [menuItems, setMenuItems] = useState<TreeItem[]>([]);
   const [dbMenuItems, setDbMenuItems] = useState<{
@@ -221,6 +191,8 @@ function CategoriesPage() {
   const getActionButtons = (menuItem: TreeItem) => [
     <IconButton
       onClick={() => {
+        // TODO: fix ts ignore
+        // @ts-ignore
         setEditedItemId(menuItem.id);
         setEditedItem(menuItem.title as string);
       }}
@@ -238,7 +210,10 @@ function CategoriesPage() {
         <TextField
           label="Пункт меню"
           variant="outlined"
-          className={classes.createMenuItemInput}
+          sx={{
+            width: '100%',
+            mr: 2,
+          }}
           value={newMenuItem}
           onChange={e => setNewMenuItem(e.target.value)}
           onKeyPress={handleInputKeyPress}
@@ -254,27 +229,45 @@ function CategoriesPage() {
         </Button>
       </Box>
 
-      {menuItems.length > 0 && (
-        <div className={classes.menuItemsTree}>
-          <SortableTree
-            treeData={menuItems}
-            onChange={setMenuItems}
-            onMoveNode={saveOrder}
-            theme={SortableTreeTheme}
-            getNodeKey={({ node, treeIndex }) => node.id || treeIndex}
-            generateNodeProps={({ node }) => ({
-              buttons:
-                editedItemId === node.id
-                  ? getEditButtons(node)
-                  : getActionButtons(node),
-              isEdited: editedItemId === node.id,
-              editedItem,
-              setEditedItem,
-            })}
-            nodeContentRenderer={props => <CategoryItem {...props} />}
-          />
-        </div>
-      )}
+      {/*{menuItems.length > 0 && (*/}
+      {/*  <Box*/}
+      {/*    sx={{*/}
+      {/*      height: 750,*/}
+      {/*      '@global': {*/}
+      {/*        '.ReactVirtualized__Grid': {*/}
+      {/*          outline: 'none !important',*/}
+      {/*        },*/}
+      {/*        '.rstcustom__highlight': {*/}
+      {/*          background: 'none !important',*/}
+      {/*        },*/}
+      {/*        '.rstcustom__node': {*/}
+      {/*          height: '62px !important',*/}
+      {/*        },*/}
+      {/*        '.rstcustom__nodeContent': {*/}
+      {/*          width: '100%',*/}
+      {/*        },*/}
+      {/*      },*/}
+      {/*    }}*/}
+      {/*  >*/}
+      {/*    <SortableTree*/}
+      {/*      treeData={menuItems}*/}
+      {/*      onChange={setMenuItems}*/}
+      {/*      onMoveNode={saveOrder}*/}
+      {/*      theme={SortableTreeTheme}*/}
+      {/*      getNodeKey={({ node, treeIndex }) => node?.id || treeIndex}*/}
+      {/*      generateNodeProps={({ node }) => ({*/}
+      {/*        buttons:*/}
+      {/*          editedItemId === node?.id*/}
+      {/*            ? getEditButtons(node)*/}
+      {/*            : getActionButtons(node),*/}
+      {/*        isEdited: editedItemId === node?.id,*/}
+      {/*        editedItem,*/}
+      {/*        setEditedItem,*/}
+      {/*      })}*/}
+      {/*      nodeContentRenderer={props => <CategoryItem {...props} />}*/}
+      {/*    />*/}
+      {/*  </Box>*/}
+      {/*)}*/}
     </>
   );
 }

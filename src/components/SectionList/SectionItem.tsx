@@ -1,85 +1,60 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  createStyles,
-  Divider,
-  makeStyles,
-  TextField,
-  Theme,
-} from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 import React from 'react';
 import TextEditor from '../TextEditor/TextEditor';
 import { Section } from './sectionTypes';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    marginRight: {
-      marginRight: theme.spacing(2),
-    },
-    accordion: {
-      padding: theme.spacing(2),
-    },
-  }),
-);
-
-function SectionItem({
-  index,
-  sectionsCount,
-  section,
-  setSections,
-}: {
+interface Props {
   index: number;
-  sectionsCount: number;
+  lastItem: boolean;
   section: Section;
   setSections: React.Dispatch<React.SetStateAction<Section[]>>;
-}) {
-  const classes = useStyles();
+}
 
+function SectionItem({ index, lastItem, section, setSections }: Props) {
   return (
-    <Box display="flex" flexDirection="column">
+    <>
       <Accordion
         defaultExpanded={!section.text && !section.title}
         TransitionProps={{ unmountOnExit: true }}
-        className={classes.accordion}
       >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Box display="flex" flexGrow={1}>
-            <TextField
-              autoFocus={!section.title}
-              fullWidth
-              label="Заголовок секції"
-              className={classes.marginRight}
-              value={section.title}
-              onClick={event => event.stopPropagation()}
-              onChange={e => {
-                const title = e.target.value;
+        <AccordionSummary expandIcon={<ExpandMore />} sx={{ px: 2, py: 1 }}>
+          <TextField
+            autoFocus={!section.title}
+            fullWidth
+            label="Заголовок секції"
+            value={section.title}
+            variant="outlined"
+            onClick={event => event.stopPropagation()}
+            onChange={e => {
+              const title = e.target.value;
 
-                setSections(prevSections => [
-                  ...prevSections.slice(0, index),
-                  { ...section, title },
-                  ...prevSections.slice(index + 1),
-                ]);
-              }}
-            />
+              setSections(prevSections => [
+                ...prevSections.slice(0, index),
+                { ...section, title },
+                ...prevSections.slice(index + 1),
+              ]);
+            }}
+          />
 
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.marginRight}
-              onClick={() => {
-                setSections(prevSections => [
-                  ...prevSections.slice(0, index),
-                  ...prevSections.slice(index + 1),
-                ]);
-              }}
-            >
-              Видалити
-            </Button>
-          </Box>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ mx: 2 }}
+            onClick={() => {
+              setSections(prevSections => [
+                ...prevSections.slice(0, index),
+                ...prevSections.slice(index + 1),
+              ]);
+            }}
+          >
+            Видалити
+          </Button>
         </AccordionSummary>
 
         <AccordionDetails>
@@ -96,12 +71,8 @@ function SectionItem({
         </AccordionDetails>
       </Accordion>
 
-      {index + 1 !== sectionsCount && (
-        <Box my={3} mx={-3}>
-          <Divider />
-        </Box>
-      )}
-    </Box>
+      {!lastItem && <Divider sx={{ my: 3, mx: -3 }} />}
+    </>
   );
 }
 

@@ -1,34 +1,19 @@
-import {
-  AppBar,
-  Box,
-  createStyles,
-  IconButton,
-  makeStyles,
-  Theme,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
-import LogoutIcon from '@material-ui/icons/ExitToApp';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../routes';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-    },
-  }),
-);
-
-function AppToolbar({
-  isAuthorized,
-  signOut,
-}: {
+interface Props {
   isAuthorized: boolean;
   signOut: () => Promise<void>;
-}) {
-  const classes = useStyles();
+}
+
+function AppToolbar({ isAuthorized, signOut }: Props) {
   const { pathname } = useLocation();
   const [pageTitle, setPageTitle] = useState('');
 
@@ -47,7 +32,7 @@ function AppToolbar({
 
   // TODO: change link to news page
   return (
-    <AppBar position="fixed" className={classes.appBar}>
+    <AppBar position="fixed" sx={{ zIndex: 'drawer' }}>
       <Toolbar>
         <Box
           display="flex"
@@ -56,7 +41,7 @@ function AppToolbar({
           width="100%"
         >
           <Typography variant="h6">
-            <Link to={ROUTES.menuItems.path}>
+            <Link to={ROUTES.partners.path}>
               Адміністративна панель Селецького ЗЗСО
             </Link>
 
