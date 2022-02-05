@@ -6,12 +6,7 @@ import { ukUA } from '@mui/material/locale';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollToAnchor from './components/ScrollToAnchor';
@@ -32,7 +27,7 @@ function App() {
       <Box display="flex">
         <CssBaseline />
 
-        <Router>
+        <BrowserRouter>
           {isAuthorized && <AppDrawer />}
 
           <AppToolbar isAuthorized={isAuthorized} signOut={signOut} />
@@ -43,9 +38,9 @@ function App() {
 
               <div id={backToTopAnchorId} />
 
-              <Switch>
-                {isLoadingAuth && <CircularProgress />}
+              {isLoadingAuth && <CircularProgress />}
 
+              <Routes>
                 {!isLoadingAuth && !isAuthorized && (
                   <Box display="flex" position="absolute">
                     <Button variant="outlined" color="primary" onClick={signIn}>
@@ -57,18 +52,14 @@ function App() {
                 {isAuthorized && (
                   <>
                     {Object.values(ROUTES).map(({ path, component }) => (
-                      <Route exact path={path} key={path}>
-                        {component}
-                      </Route>
+                      <Route path={path} key={path} element={component} />
                     ))}
-
-                    <Redirect to={ROUTES.partners.path} />
                   </>
                 )}
-              </Switch>
+              </Routes>
             </Box>
           </Box>
-        </Router>
+        </BrowserRouter>
 
         <ScrollToAnchor anchorId={backToTopAnchorId} />
       </Box>

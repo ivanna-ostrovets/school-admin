@@ -14,16 +14,10 @@ export interface AppRoute {
   icon: any;
   path: string;
   title: string;
-  component: JSX.Element;
+  component: React.ReactNode;
 }
 
-export const ROUTES: {
-  menuItems: AppRoute;
-  partners: AppRoute;
-  businessCard: AppRoute;
-  talents: AppRoute;
-  graduates: AppRoute;
-} = {
+export const ROUTES = {
   menuItems: {
     path: '/menu-items',
     title: 'Пункти меню',

@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import React, { useEffect } from 'react';
-import { Prompt } from 'react-router-dom';
 import ElevationScroll from '../ElevationScroll';
 import SectionItem from './SectionItem';
 import { Section } from './sectionTypes';
@@ -14,6 +13,8 @@ interface Props {
   saveData: () => void;
   children?: React.ReactNode;
 }
+
+// TODO: add Prompt when leaving
 
 function SectionList({
   isDataChanged,
@@ -77,10 +78,10 @@ function SectionList({
         />
       ))}
 
-      <Prompt
-        when={isDataChanged}
-        message="Ви впевнені, що хочете залишити сторінку? У вас є незбережені зміни!"
-      />
+      {/*<Prompt*/}
+      {/*  when={isDataChanged}*/}
+      {/*  message="Ви впевнені, що хочете залишити сторінку? У вас є незбережені зміни!"*/}
+      {/*/>*/}
     </Box>
   );
 }
