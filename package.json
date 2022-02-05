@@ -28,13 +28,14 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-sortable-tree": "^0.3.12",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.4.2",
-    "prettier": "^2.1.2"
+    "husky": "^7.0.0",
+    "lint-staged": "^12.3.3",
+    "prettier": "^2.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,15 +52,9 @@
       "last 1 safari version"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }
