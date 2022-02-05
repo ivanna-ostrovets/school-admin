@@ -4,17 +4,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AppContext } from '../AppContext';
 import { ROUTES } from '../routes';
 
-interface Props {
-  isAuthorized: boolean;
-  signOut: () => Promise<void>;
-}
-
-function AppToolbar({ isAuthorized, signOut }: Props) {
+function AppToolbar() {
   const { pathname } = useLocation();
+  const { isAuthorized, signOut } = useContext(AppContext);
   const [pageTitle, setPageTitle] = useState('');
 
   useEffect(() => {

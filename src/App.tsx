@@ -5,13 +5,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ukUA } from '@mui/material/locale';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppContext } from './AppContext';
 import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollToAnchor from './components/ScrollToAnchor';
 import { ROUTES } from './routes';
-import { useAuth } from './utils/useAuth';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
@@ -20,7 +20,7 @@ const theme = createTheme({}, ukUA);
 // TODO: add scrollbar to inner content only
 
 function App() {
-  const [isAuthorized, isLoadingAuth, signIn, signOut] = useAuth();
+  const { isAuthorized, isLoadingAuth, signIn } = useContext(AppContext);
 
   return (
     <ThemeProvider theme={theme}>
@@ -30,7 +30,7 @@ function App() {
         <BrowserRouter>
           {isAuthorized && <AppDrawer />}
 
-          <AppToolbar isAuthorized={isAuthorized} signOut={signOut} />
+          <AppToolbar />
 
           <Box sx={{ flexGrow: 1, p: 3 }}>
             <Box height="100%" width="100%">
