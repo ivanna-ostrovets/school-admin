@@ -33,6 +33,7 @@ const toolbar = [
 ];
 
 // TODO: rewrite global styles
+// TODO: insert table with ordered list
 function TextEditor({
   data,
   onChange,

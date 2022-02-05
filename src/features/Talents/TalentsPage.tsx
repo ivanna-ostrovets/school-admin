@@ -24,7 +24,7 @@ function TalentsPage() {
         setDbTalents(data);
       });
   }, []);
-
+  // TODO: drop empty tags
   useEffect(() => {
     setTalents(dbTalents);
   }, [dbTalents]);

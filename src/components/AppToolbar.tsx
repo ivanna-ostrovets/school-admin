@@ -1,11 +1,14 @@
 import {
   AppBar,
+  Box,
   createStyles,
+  IconButton,
   makeStyles,
   Theme,
   Toolbar,
   Typography,
 } from '@material-ui/core';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../routes';
@@ -18,7 +21,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function AppToolbar() {
+function AppToolbar({
+  isAuthorized,
+  signOut,
+}: {
+  isAuthorized: boolean;
+  signOut: () => Promise<void>;
+}) {
   const classes = useStyles();
   const { pathname } = useLocation();
   const [pageTitle, setPageTitle] = useState('');
@@ -40,13 +49,26 @@ function AppToolbar() {
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
-        <Typography variant="h6">
-          <Link to={ROUTES.menuItems.path}>
-            Адміністративна панель Селецького ЗЗСО
-          </Link>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+        >
+          <Typography variant="h6">
+            <Link to={ROUTES.menuItems.path}>
+              Адміністративна панель Селецького ЗЗСО
+            </Link>
 
-          {pageTitle}
-        </Typography>
+            {pageTitle}
+          </Typography>
+
+          {isAuthorized && (
+            <IconButton onClick={signOut} color="inherit">
+              <LogoutIcon />
+            </IconButton>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

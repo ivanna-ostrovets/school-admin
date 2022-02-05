@@ -1,4 +1,7 @@
 import {
+  Box,
+  Button,
+  CircularProgress,
   createMuiTheme,
   createStyles,
   CssBaseline,
@@ -19,6 +22,7 @@ import AppDrawer from './components/AppDrawer';
 import AppToolbar from './components/AppToolbar';
 import ScrollTop from './components/ScrollTop';
 import { ROUTES } from './routes';
+import { useAuth } from './useAuth';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
@@ -38,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
   const classes = useStyles();
+  const [isAuthorized, isLoadingAuth, signIn, signOut] = useAuth();
 
   return (
     <ThemeProvider theme={theme}>
@@ -45,24 +50,40 @@ function App() {
         <CssBaseline />
 
         <Router>
-          <AppDrawer />
+          {isAuthorized && <AppDrawer />}
 
-          <AppToolbar />
+          <AppToolbar isAuthorized={isAuthorized} signOut={signOut} />
 
           <main className={classes.content}>
-            <Toolbar />
+            <Box height="100%" width="100%">
+              <Toolbar />
 
-            <div id={backToTopAnchorId} />
+              <div id={backToTopAnchorId} />
 
-            <Switch>
-              {Object.values(ROUTES).map(({ path, component }) => (
-                <Route exact path={path} key={path}>
-                  {component}
-                </Route>
-              ))}
+              <Switch>
+                {isLoadingAuth && <CircularProgress />}
 
-              <Redirect to={ROUTES.menuItems.path} />
-            </Switch>
+                {!isLoadingAuth && !isAuthorized && (
+                  <Box display="flex" position="absolute">
+                    <Button variant="outlined" color="primary" onClick={signIn}>
+                      Увійти за допомогою Google
+                    </Button>
+                  </Box>
+                )}
+
+                {isAuthorized && (
+                  <>
+                    {Object.values(ROUTES).map(({ path, component }) => (
+                      <Route exact path={path} key={path}>
+                        {component}
+                      </Route>
+                    ))}
+
+                    <Redirect to={ROUTES.menuItems.path} />
+                  </>
+                )}
+              </Switch>
+            </Box>
           </main>
         </Router>
 
