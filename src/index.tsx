@@ -1,3 +1,5 @@
+import { ukUA } from '@mui/material/locale';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -6,10 +8,14 @@ import './firebaseService';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+const theme = createTheme({}, ukUA);
+
 ReactDOM.render(
   <React.StrictMode>
     <AppContextProvider>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </AppContextProvider>
   </React.StrictMode>,
   document.getElementById('root'),

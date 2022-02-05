@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ukUA } from '@mui/material/locale';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import React, { useContext } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -14,52 +12,41 @@ import { ROUTES } from './routes';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
-const theme = createTheme({}, ukUA);
-
-// TODO: add scrollbar to inner content only
-
 function App() {
   const { isAuthorized } = useContext(AppContext);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box display="flex">
-        <CssBaseline />
+    <Box display="flex">
+      <CssBaseline />
 
-        <BrowserRouter>
-          {isAuthorized && <AppDrawer />}
+      <BrowserRouter>
+        {isAuthorized && <AppDrawer />}
 
-          <AppToolbar />
+        <AppToolbar />
 
-          <Box sx={{ flexGrow: 1, p: 3 }}>
-            <Box height="100%" width="100%">
-              <Toolbar />
+        <Box display="flex" flexDirection="column" flex={1} p={3}>
+          <Toolbar />
 
-              <div id={backToTopAnchorId} />
+          <div id={backToTopAnchorId} />
 
-              <Routes>
+          <Routes>
+            <Route path="*" element={<Navigate to={ROUTES.menuItems.path} />} />
+
+            <>
+              {Object.values(ROUTES).map(({ path, component }) => (
                 <Route
-                  path="*"
-                  element={<Navigate to={ROUTES.menuItems.path} />}
+                  path={path}
+                  key={path}
+                  element={<PrivateRoute>{component}</PrivateRoute>}
                 />
+              ))}
+            </>
+          </Routes>
+        </Box>
+      </BrowserRouter>
 
-                <>
-                  {Object.values(ROUTES).map(({ path, component }) => (
-                    <Route
-                      path={path}
-                      key={path}
-                      element={<PrivateRoute>{component}</PrivateRoute>}
-                    />
-                  ))}
-                </>
-              </Routes>
-            </Box>
-          </Box>
-        </BrowserRouter>
-
-        <ScrollToAnchor anchorId={backToTopAnchorId} />
-      </Box>
-    </ThemeProvider>
+      <ScrollToAnchor anchorId={backToTopAnchorId} />
+    </Box>
   );
 }
 

@@ -25,9 +25,21 @@ function DrawerItem({ icon, path, title }: AppRoute) {
   );
 }
 
+const drawerWidth = 240;
+
 export default function AppDrawer() {
   return (
-    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0 }}>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+        },
+      }}
+    >
       <Toolbar />
 
       <List>
