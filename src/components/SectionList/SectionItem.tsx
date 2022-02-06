@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import React from 'react';
+import { Section } from '../../types';
 import TextEditor from '../TextEditor/TextEditor';
-import { Section } from './sectionTypes';
 
 interface Props {
   index: number;

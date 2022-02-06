@@ -1,5 +1,11 @@
-import firebase, { User } from 'firebase/app';
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut as googleSignOut,
+  User,
+} from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { auth, authProvider } from '../firebaseService';
 
 export function useAuth() {
   const [isAuthorized, setAuthorized] = useState(false);
@@ -14,10 +20,8 @@ export function useAuth() {
   }
 
   async function signIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
     try {
-      const { user } = await firebase.auth().signInWithPopup(provider);
+      const { user } = await signInWithPopup(auth, authProvider);
       setUserAuthorized(user);
     } catch (error) {
       console.log(error);
@@ -25,12 +29,12 @@ export function useAuth() {
   }
 
   async function signOut() {
-    await firebase.auth().signOut();
+    await googleSignOut(auth);
     setAuthorized(false);
   }
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(setUserAuthorized);
+    onAuthStateChanged(auth, setUserAuthorized);
   }, []);
 
   return [isAuthorized, isLoadingAuth, signIn, signOut] as const;

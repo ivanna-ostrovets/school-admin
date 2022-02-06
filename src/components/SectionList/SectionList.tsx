@@ -2,19 +2,20 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import React, { useEffect } from 'react';
+import { Section } from '../../types';
 import ElevationScroll from '../ElevationScroll';
 import SectionItem from './SectionItem';
-import { Section } from './sectionTypes';
 
 interface Props {
   isDataChanged: boolean;
   sections: Section[];
   setSections: React.Dispatch<React.SetStateAction<Section[]>>;
-  saveData: () => void;
+  saveData: () => Promise<void>;
   children?: React.ReactNode;
 }
 
 // TODO: add Prompt when leaving
+// TODO: add loading while saving
 
 function SectionList({
   isDataChanged,

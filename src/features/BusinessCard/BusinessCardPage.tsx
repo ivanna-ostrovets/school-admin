@@ -1,70 +1,26 @@
 import TextField from '@mui/material/TextField';
-import firebase from 'firebase';
-import isEqual from 'lodash/isEqual';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SectionList from '../../components/SectionList/SectionList';
-import { Section } from '../../components/SectionList/sectionTypes';
-import { DB_KEY } from '../../databaseKeys';
-import { sanitizeText } from '../../utils/sanitizeText';
-
-interface BusinessCard {
-  title: string;
-  subtitle: string;
-  sections: Section[];
-}
+import { useBusinessCard } from './useBusinessCard';
 
 function BusinessCardPage() {
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [sections, setSections] = useState<Section[]>([]);
-  const [dbCard, setDbCard] = useState<BusinessCard>();
-
-  const isDataChanged = Boolean(
-    dbCard &&
-      title &&
-      subtitle &&
-      sections &&
-      !isEqual({ title, subtitle, sections }, dbCard),
-  );
-
-  useEffect(() => {
-    firebase
-      .database()
-      .ref(DB_KEY.businessCard)
-      .on('value', snapshot => {
-        const data: BusinessCard = snapshot.val() || {};
-
-        setDbCard(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (!dbCard) return;
-
-    setTitle(dbCard.title || '');
-    setSubtitle(dbCard.subtitle || '');
-    setSections(dbCard.sections || []);
-  }, [dbCard]);
-
-  const saveBusinessCard = () =>
-    firebase
-      .database()
-      .ref()
-      .update({
-        [DB_KEY.businessCardTitle]: title,
-        [DB_KEY.businessCardSubtitle]: subtitle,
-        [DB_KEY.businessCardSections]: sections.map(section => ({
-          title: section.title,
-          text: sanitizeText(section.text),
-        })),
-      });
+  const {
+    title,
+    setTitle,
+    subtitle,
+    setSubtitle,
+    sections,
+    setSections,
+    isDataChanged,
+    saveData,
+  } = useBusinessCard();
 
   return (
     <SectionList
       isDataChanged={isDataChanged}
       sections={sections}
       setSections={setSections}
-      saveData={saveBusinessCard}
+      saveData={saveData}
     >
       <TextField
         label="Заголовок"

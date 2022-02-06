@@ -9,12 +9,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
-import firebase from 'firebase';
 import React, { KeyboardEvent, useState } from 'react';
-import { DB_KEY } from '../../databaseKeys';
-import { Partner } from './partnerTypes';
+import { editPartner, removePartner } from '../../api/partnersApi';
+import { Partner, Partners } from '../../types';
 
-function PartnerItem({ partner }: { partner: Partner }) {
+interface Props {
+  partner: Partner;
+  setPartners: React.Dispatch<React.SetStateAction<Partners>>;
+}
+
+function PartnerItem({ partner, setPartners }: Props) {
   const [editedPartner, setEditedPartner] = useState<Partner>();
 
   const handleEditInputKeyPress = async ({ key }: KeyboardEvent) => {
@@ -23,22 +27,25 @@ function PartnerItem({ partner }: { partner: Partner }) {
     }
   };
 
-  const edit = async () => {
+  async function edit() {
     if (!editedPartner) return;
 
-    await firebase
-      .database()
-      .ref()
-      .update({ [`${DB_KEY.partners}/${editedPartner.id}`]: editedPartner });
-
+    await editPartner(editedPartner);
+    setPartners(prevPartners => ({
+      ...prevPartners,
+      [editedPartner.id]: editedPartner,
+    }));
     cancelEditing();
-  };
+  }
 
-  const remove = (partnerToRemove: Partner) =>
-    firebase
-      .database()
-      .ref()
-      .update({ [`${DB_KEY.partners}/${partnerToRemove.id}`]: null });
+  async function remove() {
+    await removePartner(partner);
+
+    setPartners(prevPartners => {
+      const { [partner.id]: _, ...newPartners } = prevPartners;
+      return newPartners;
+    });
+  }
 
   const cancelEditing = () => {
     setEditedPartner(undefined);
@@ -104,7 +111,7 @@ function PartnerItem({ partner }: { partner: Partner }) {
           <EditIcon />
         </IconButton>
 
-        <IconButton onClick={() => remove(partner)}>
+        <IconButton onClick={remove}>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

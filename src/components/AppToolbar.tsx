@@ -38,9 +38,7 @@ function AppToolbar() {
           width="100%"
         >
           <Typography variant="h6">
-            <Link to={ROUTES.partners.path}>
-              Адміністративна панель Селецького ЗЗСО
-            </Link>
+            <Link to="/">Адміністративна панель Селецького ЗЗСО</Link>
 
             {pageTitle}
           </Typography>

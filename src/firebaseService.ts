@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getDatabase } from 'firebase/database';
 
 const config = {
   apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -11,6 +11,10 @@ const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
-firebase.initializeApp(config);
+const app = initializeApp(config);
 
-firebase.auth().languageCode = 'uk';
+export const auth = getAuth(app);
+export const authProvider = new GoogleAuthProvider();
+auth.languageCode = 'uk';
+
+export const database = getDatabase(app);

@@ -12,6 +12,8 @@ import { ROUTES } from './routes';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
+// TODO: drop empty HTML tags
+
 function App() {
   const { isAuthorized } = useContext(AppContext);
 
