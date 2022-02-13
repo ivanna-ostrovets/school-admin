@@ -18,7 +18,8 @@ export interface AppRoute {
   path: string;
   title: string;
   component: React.ReactNode;
-  isPrivate?: boolean;
+  isPrivate: boolean;
+  showInNavigation: boolean;
 }
 
 export const APP_ROUTES = {
@@ -28,6 +29,7 @@ export const APP_ROUTES = {
     icon: ClassRoundedIcon,
     component: <CategoriesPage />,
     isPrivate: true,
+    showInNavigation: true,
   },
   partners: {
     path: '/partners',
@@ -35,6 +37,7 @@ export const APP_ROUTES = {
     icon: WorkIcon,
     component: <PartnersPage />,
     isPrivate: true,
+    showInNavigation: true,
   },
   businessCard: {
     path: '/businessCard',
@@ -42,6 +45,7 @@ export const APP_ROUTES = {
     icon: BusinessIcon,
     component: <BusinessCardPage />,
     isPrivate: true,
+    showInNavigation: true,
   },
   talents: {
     path: '/talents',
@@ -49,7 +53,7 @@ export const APP_ROUTES = {
     icon: GradeIcon,
     component: <TalentsPage />,
     isPrivate: true,
-    showInNavigation: false,
+    showInNavigation: true,
   },
   graduates: {
     path: '/graduates',
@@ -57,6 +61,7 @@ export const APP_ROUTES = {
     icon: SchoolIcon,
     component: <GraduatesPage />,
     isPrivate: true,
+    showInNavigation: true,
   },
 };
 

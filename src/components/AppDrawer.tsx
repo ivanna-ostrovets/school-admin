@@ -6,15 +6,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute, APP_ROUTES } from '../APP_ROUTES';
+import { APP_ROUTES, AppRoute } from '../APP_ROUTES';
 
-function DrawerItem({ icon, path, title }: AppRoute) {
+function DrawerItem({ icon: Icon, path, title }: AppRoute) {
   const { pathname } = useLocation();
-  const Icon = icon;
 
   return (
     <Link to={path}>
-      <ListItem button selected={path === pathname}>
+      <ListItem button selected={pathname.startsWith(path)}>
         <ListItemIcon>
           <Icon />
         </ListItemIcon>
@@ -28,6 +27,10 @@ function DrawerItem({ icon, path, title }: AppRoute) {
 const drawerWidth = 240;
 
 export default function AppDrawer() {
+  const routesToRender = Object.values(APP_ROUTES).filter(
+    ({ showInNavigation }) => showInNavigation,
+  );
+
   return (
     <Drawer
       variant="permanent"
@@ -43,7 +46,7 @@ export default function AppDrawer() {
       <Toolbar />
 
       <List>
-        {Object.values(APP_ROUTES).map(route => (
+        {routesToRender.map(route => (
           <DrawerItem {...route} key={route.path} />
         ))}
       </List>
