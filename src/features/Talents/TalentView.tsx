@@ -2,30 +2,28 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { removeTalent } from '../../api/talentsApi';
 import { APP_ROUTES } from '../../APP_ROUTES';
-import SectionListItem from '../../components/SectionListItem';
+import ItemViewPage from '../../components/ItemViewPage/ItemViewPage';
+import { useFetchTalent } from './useFetchTalent';
 
-interface Props {
-  id: string;
-  title: string;
-  refetchData: () => void;
-}
-
-function TalentListItem({ id, title, refetchData }: Props) {
+function TalentView() {
   const navigate = useNavigate();
+  const [talent, id] = useFetchTalent();
 
   const handleTalentRemoval = async () => {
     await removeTalent(id);
-    refetchData();
+    navigate(APP_ROUTES.talents.path);
   };
 
+  if (!talent) return null;
+
   return (
-    <SectionListItem
-      title={title}
+    <ItemViewPage
+      title={talent.title}
+      text={talent.text}
       handleRemoval={handleTalentRemoval}
-      navigateToView={() => navigate(APP_ROUTES.talentView.getLink(id))}
       navigateToEdit={() => navigate(APP_ROUTES.editTalent.getLink(id))}
     />
   );
 }
 
-export default TalentListItem;
+export default TalentView;

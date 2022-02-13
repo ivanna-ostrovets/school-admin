@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import React, { useState } from 'react';
-import ConfirmDeleteDialog from '../ConfirmDeleteDialog';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 
 interface Props {
   title: string;
