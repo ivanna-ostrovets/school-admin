@@ -8,18 +8,20 @@ import { fetchTalentTitles } from '../../api/talentsApi';
 import { APP_ROUTES } from '../../APP_ROUTES';
 import ElevationScroll from '../../components/ElevationScroll';
 import { TalentTitles } from '../../types';
-import TalentTableItem from './TalentTableItem';
+import TalentListItem from './TalentListItem';
 
 function TalentsPage() {
   const [talentTitles, setTalentTitles] = useState<TalentTitles>([]);
+  const [isDataLoading, setDataLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       setTalentTitles(await fetchTalentTitles());
+      setDataLoading(false);
     }
 
     fetchData();
-  }, []);
+  }, [isDataLoading, setDataLoading]);
 
   return (
     <>
@@ -31,17 +33,25 @@ function TalentsPage() {
         </Link>
       </ElevationScroll>
 
-      <List>
-        {talentTitles.length === 0 && (
-          <Box display="flex" justifyContent="center">
-            <CircularProgress />
-          </Box>
-        )}
+      {isDataLoading && <CircularProgress />}
 
-        {talentTitles.map(item => (
-          <TalentTableItem key={item.id} {...item} />
-        ))}
-      </List>
+      {!isDataLoading && (
+        <List>
+          {talentTitles.length === 0 && (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress />
+            </Box>
+          )}
+
+          {talentTitles.map(item => (
+            <TalentListItem
+              key={item.id}
+              {...item}
+              refetchData={() => setDataLoading(true)}
+            />
+          ))}
+        </List>
+      )}
     </>
   );
 }

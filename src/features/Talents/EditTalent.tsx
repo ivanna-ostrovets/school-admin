@@ -1,10 +1,10 @@
 import React from 'react';
 import { editTalent } from '../../api/talentsApi';
 import TalentForm from './TalentForm';
-import { useTalent } from './useTalent';
+import { useFetchTalent } from './useFetchTalent';
 
 function EditTalent() {
-  const [talent] = useTalent();
+  const [talent] = useFetchTalent();
 
   return <TalentForm talent={talent} saveTalent={editTalent} />;
 }
