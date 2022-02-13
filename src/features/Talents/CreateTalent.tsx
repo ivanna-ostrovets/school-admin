@@ -18,7 +18,9 @@ function CreateTalent() {
   const saveData = async () => {
     if (!canSave) return;
 
-    await addTalent({ text, title });
+    const id = await addTalent({ text, title });
+
+    if (id) return navigate(APP_ROUTES.talentView.getLink(id));
 
     navigate(APP_ROUTES.talents.path);
   };

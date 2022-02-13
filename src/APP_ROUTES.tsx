@@ -13,9 +13,11 @@ import GraduatesPage from './features/Graduates/GraduatesPage';
 import PartnersPage from './features/Partners/PartnersPage';
 import CreateTalent from './features/Talents/CreateTalent';
 import TalentsPage from './features/Talents/TalentsPage';
+import TalentView from './features/Talents/TalentView';
 
 export interface AppRoute {
   icon?: any;
+  getLink?: (value: string) => string;
   path: string;
   title: string;
   component: React.ReactNode;
@@ -60,6 +62,14 @@ export const APP_ROUTES = {
     path: '/talents/new',
     title: 'Вернісаж талантів | Додати секцію',
     component: <CreateTalent />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  talentView: {
+    path: '/talents/:id',
+    getLink: (id: string) => `/talents/${id}`,
+    title: 'Вернісаж талантів | Перегляд',
+    component: <TalentView />,
     isPrivate: true,
     showInNavigation: false,
   },

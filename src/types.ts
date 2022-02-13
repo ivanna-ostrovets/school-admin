@@ -25,4 +25,8 @@ export interface UnsavedTalent {
   text: string;
 }
 
+export interface Talent extends UnsavedTalent {
+  id: string;
+}
+
 export type TalentTitles = { id: string; title: string }[];

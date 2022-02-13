@@ -1,0 +1,12 @@
+.htmlWrapper table,
+.htmlWrapper td,
+.htmlWrapper tr,
+.htmlWrapper th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.htmlWrapper td,
+.htmlWrapper th {
+  padding: 10px;
+}
