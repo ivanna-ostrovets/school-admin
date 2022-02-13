@@ -38,7 +38,7 @@ export async function addTalent(talent: UnsavedTalent) {
   return id;
 }
 
-export async function editTalent(talent: Talent) {
+export async function updateTalent(talent: Talent) {
   await update(ref(database), {
     [`${TALENTS_DB_KEY}/${talent.id}`]: talent,
   });

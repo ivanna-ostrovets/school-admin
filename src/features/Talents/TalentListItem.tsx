@@ -21,7 +21,7 @@ function TalentListItem({ id, title, refetchData }: Props) {
   const navigate = useNavigate();
   const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const deleteTalent = async () => {
+  const handleTalentRemoval = async () => {
     await removeTalent(id);
     refetchData();
   };
@@ -54,7 +54,7 @@ function TalentListItem({ id, title, refetchData }: Props) {
         isOpen={isConfirmDeleteOpen}
         setOpen={setConfirmDeleteOpen}
         title={title}
-        onConfirm={deleteTalent}
+        onConfirm={handleTalentRemoval}
       />
     </>
   );

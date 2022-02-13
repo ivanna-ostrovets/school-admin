@@ -10,7 +10,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import React, { KeyboardEvent, useState } from 'react';
-import { editPartner, removePartner } from '../../api/partnersApi';
+import { removePartner, updatePartner } from '../../api/partnersApi';
 import { Partner, Partners } from '../../types';
 
 interface Props {
@@ -19,21 +19,21 @@ interface Props {
 }
 
 function PartnerItem({ partner, setPartners }: Props) {
-  const [editedPartner, setEditedPartner] = useState<Partner>();
+  const [updatedPartner, setUpdatedPartner] = useState<Partner>();
 
-  const handleEditInputKeyPress = async ({ key }: KeyboardEvent) => {
+  const handleInputKeyPress = async ({ key }: KeyboardEvent) => {
     if (key === 'Enter') {
-      await edit();
+      await update();
     }
   };
 
-  async function edit() {
-    if (!editedPartner) return;
+  async function update() {
+    if (!updatedPartner) return;
 
-    await editPartner(editedPartner);
+    await updatePartner(updatedPartner);
     setPartners(prevPartners => ({
       ...prevPartners,
-      [editedPartner.id]: editedPartner,
+      [updatedPartner.id]: updatedPartner,
     }));
     cancelEditing();
   }
@@ -48,24 +48,24 @@ function PartnerItem({ partner, setPartners }: Props) {
   }
 
   const cancelEditing = () => {
-    setEditedPartner(undefined);
+    setUpdatedPartner(undefined);
   };
 
-  return partner.id === editedPartner?.id ? (
+  return partner.id === updatedPartner?.id ? (
     <Box my={2}>
       <Box mb={2} pr={2} display="flex" justifyContent="space-between">
         <Box ml={2} width="100%">
           <TextField
             fullWidth
             label="Назва"
-            value={editedPartner.name}
+            value={updatedPartner.name}
             onChange={e =>
-              setEditedPartner({
-                ...editedPartner,
+              setUpdatedPartner({
+                ...updatedPartner,
                 name: e.target.value,
               })
             }
-            onKeyPress={handleEditInputKeyPress}
+            onKeyPress={handleInputKeyPress}
           />
         </Box>
 
@@ -73,18 +73,18 @@ function PartnerItem({ partner, setPartners }: Props) {
           <TextField
             fullWidth
             label="Посилання"
-            value={editedPartner.url}
+            value={updatedPartner.url}
             onChange={e =>
-              setEditedPartner({
-                ...editedPartner,
+              setUpdatedPartner({
+                ...updatedPartner,
                 url: e.target.value,
               })
             }
-            onKeyPress={handleEditInputKeyPress}
+            onKeyPress={handleInputKeyPress}
           />
         </Box>
 
-        <IconButton onClick={edit}>
+        <IconButton onClick={update}>
           <DoneIcon />
         </IconButton>
 
@@ -107,7 +107,7 @@ function PartnerItem({ partner, setPartners }: Props) {
       />
 
       <ListItemSecondaryAction>
-        <IconButton onClick={() => setEditedPartner(partner)}>
+        <IconButton onClick={() => setUpdatedPartner(partner)}>
           <EditIcon />
         </IconButton>
 

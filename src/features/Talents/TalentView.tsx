@@ -16,7 +16,7 @@ function TalentView() {
   const [talent, id] = useFetchTalent();
   const [isConfirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const deleteTalent = async () => {
+  const handleTalentRemoval = async () => {
     await removeTalent(id);
     navigate(APP_ROUTES.talents.path);
   };
@@ -64,7 +64,7 @@ function TalentView() {
         isOpen={isConfirmDeleteOpen}
         setOpen={setConfirmDeleteOpen}
         title={talent.title}
-        onConfirm={deleteTalent}
+        onConfirm={handleTalentRemoval}
       />
     </Box>
   );

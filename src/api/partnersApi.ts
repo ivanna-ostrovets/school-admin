@@ -21,7 +21,7 @@ export async function addPartner(partner: UnsavedPartner) {
   return id;
 }
 
-export async function editPartner(partner: Partner) {
+export async function updatePartner(partner: Partner) {
   return update(ref(database), {
     [`${PARTNERS_DB_KEY}/${partner.id}`]: partner,
   });
