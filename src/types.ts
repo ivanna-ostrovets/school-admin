@@ -20,17 +20,12 @@ export interface Partner extends UnsavedPartner {
 
 export type Partners = { [key: string]: Partner };
 
-export interface BaseTalent {
-  id: string | undefined;
+export interface UnsavedTalent {
   title: string;
   text: string;
 }
 
-export interface UnsavedTalent extends BaseTalent {
-  id: undefined;
-}
-
-export interface Talent extends BaseTalent {
+export interface Talent extends UnsavedTalent {
   id: string;
 }
 

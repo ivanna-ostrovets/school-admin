@@ -2,40 +2,42 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { APP_ROUTES } from '../../APP_ROUTES';
-import ElevationScroll from '../../components/ElevationScroll';
-import TextEditor from '../../components/TextEditor/TextEditor';
-import { BaseTalent } from '../../types';
+import ElevationScroll from './ElevationScroll';
+import TextEditor from './TextEditor/TextEditor';
 
-interface Props<T> {
-  talent?: T;
-  saveTalent: (talent: T) => Promise<string | null>;
+interface Props {
+  title?: string;
+  text?: string;
+  saveItem: (title: string, text: string) => Promise<string | null>;
+  navigateToView: (id: string) => void;
+  navigateToList: () => void;
 }
 
-function TalentForm<T extends BaseTalent>({ talent, saveTalent }: Props<T>) {
-  const navigate = useNavigate();
+function ItemForm({
+  saveItem,
+  navigateToView,
+  navigateToList,
+  ...props
+}: Props) {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
   useEffect(() => {
-    if (!talent) return;
+    if (!props.title || !props.text) return;
 
-    setTitle(talent.title);
-    setText(talent.text);
-  }, [talent]);
-
-  const canSave = title && text;
+    setTitle(props.title);
+    setText(props.text);
+  }, [props.title, props.text]);
 
   const saveData = async () => {
-    if (!canSave) return;
+    const id = await saveItem(text, title);
 
-    const id = await saveTalent({ ...talent, text, title } as T);
+    if (id) return navigateToView(id);
 
-    if (id) return navigate(APP_ROUTES.talentView.getLink(id));
-
-    navigate(APP_ROUTES.talents.path);
+    navigateToList();
   };
+
+  const canSave = title && text;
 
   return (
     <Box display="flex" flexDirection="column">
@@ -65,4 +67,4 @@ function TalentForm<T extends BaseTalent>({ talent, saveTalent }: Props<T>) {
   );
 }
 
-export default TalentForm;
+export default ItemForm;

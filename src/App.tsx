@@ -12,6 +12,7 @@ import ScrollToAnchor from './components/ScrollToAnchor';
 const backToTopAnchorId = 'back-to-top-anchor';
 
 // TODO: drop empty HTML tags
+// TODO: fix text editor typing
 
 function App() {
   const routes = useRoutes(ROUTER_ROUTES);
