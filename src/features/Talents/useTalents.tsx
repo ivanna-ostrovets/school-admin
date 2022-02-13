@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import { useEffect, useState } from 'react';
-import { fetchTalents, updateTalents } from '../../api/talentsApi';
+import { updateTalents } from '../../api/talentsApi';
 import { Section } from '../../types';
 
 export function useTalents() {
@@ -9,7 +9,7 @@ export function useTalents() {
 
   useEffect(() => {
     async function fetchData() {
-      setDbTalents(await fetchTalents());
+      // setDbTalents(await fetchTalentTitles());
     }
 
     fetchData();
