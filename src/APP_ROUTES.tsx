@@ -12,6 +12,7 @@ import CategoriesPage from './features/Categories/CategoriesPage';
 import GraduatesPage from './features/Graduates/GraduatesPage';
 import PartnersPage from './features/Partners/PartnersPage';
 import CreateTalent from './features/Talents/CreateTalent';
+import EditTalent from './features/Talents/EditTalent';
 import TalentsPage from './features/Talents/TalentsPage';
 import TalentView from './features/Talents/TalentView';
 
@@ -70,6 +71,14 @@ export const APP_ROUTES = {
     getLink: (id: string) => `/talents/${id}`,
     title: 'Вернісаж талантів | Перегляд',
     component: <TalentView />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  editTalent: {
+    path: '/talents/:id/edit',
+    getLink: (id: string) => `/talents/${id}/edit`,
+    title: 'Вернісаж талантів | Редагувати',
+    component: <EditTalent />,
     isPrivate: true,
     showInNavigation: false,
   },

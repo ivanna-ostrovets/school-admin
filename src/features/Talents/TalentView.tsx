@@ -1,29 +1,17 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { fetchTalent } from '../../api/talentsApi';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { APP_ROUTES } from '../../APP_ROUTES';
 import ElevationScroll from '../../components/ElevationScroll';
-import { Talent } from '../../types';
 import { sanitizeText } from '../../utils/sanitizeText';
 import styles from './TalentView.module.css';
+import { useTalent } from './useTalent';
 
 function TalentView() {
   const navigate = useNavigate();
-  let { id = '' } = useParams();
-
-  const [talent, setTalent] = useState<Talent>();
-
-  useEffect(() => {
-    if (!id) return;
-
-    async function fetchData() {
-      setTalent(await fetchTalent(id));
-    }
-
-    fetchData();
-  }, [id]);
+  const [talent, id] = useTalent();
 
   return (
     <Box display="flex" flexDirection="column">
@@ -36,7 +24,11 @@ function TalentView() {
         >
           <Typography variant="h6">{talent?.title}</Typography>
 
-          <Button variant="contained" color="primary" onClick={() => {}}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate(APP_ROUTES.editTalent.getLink(id))}
+          >
             Редагувати
           </Button>
         </Box>

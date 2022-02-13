@@ -21,7 +21,7 @@ export async function fetchTalentTitles() {
 
 export async function fetchTalent(id: string) {
   const snapshot = await get(child(ref(database), `${TALENTS_DB_KEY}/${id}`));
-  const data: Talent = snapshot.val() || {};
+  const data: Talent = { ...snapshot.val(), id } || {};
 
   return data;
 }
@@ -34,4 +34,12 @@ export async function addTalent(talent: UnsavedTalent) {
   });
 
   return id;
+}
+
+export async function editTalent(talent: Talent) {
+  await update(ref(database), {
+    [`${TALENTS_DB_KEY}/${talent.id}`]: talent,
+  });
+
+  return talent.id;
 }

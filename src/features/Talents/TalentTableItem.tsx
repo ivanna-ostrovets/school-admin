@@ -26,7 +26,7 @@ function TalentTableItem({ id, title }: Props) {
           <VisibilityIcon />
         </IconButton>
 
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={() => navigate(APP_ROUTES.editTalent.getLink(id))}>
           <EditIcon />
         </IconButton>
 
