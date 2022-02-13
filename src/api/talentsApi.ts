@@ -1,13 +1,12 @@
-import { child, get, ref, update } from 'firebase/database';
+import { child, get, push, ref, update } from 'firebase/database';
 import { database } from '../firebaseService';
-import { Section, Talent, TalentTitles } from '../types';
-import { sanitizeText } from '../utils/sanitizeText';
+import { TalentTitles, UnsavedTalent } from '../types';
 
 const TALENTS_DB_KEY = 'talents';
 
 export async function fetchTalentTitles() {
   const snapshot = await get(child(ref(database), TALENTS_DB_KEY));
-  const data: Record<string, Talent> = snapshot.val() || {};
+  const data: Record<string, UnsavedTalent> = snapshot.val() || {};
 
   const talentTitles: TalentTitles = Object.entries(data).reduce(
     (titles: TalentTitles, [id, talent]) => [
@@ -20,11 +19,10 @@ export async function fetchTalentTitles() {
   return talentTitles;
 }
 
-export async function updateTalents(talents: Section[]) {
+export async function addTalent(talent: UnsavedTalent) {
+  const id = push(child(ref(database), TALENTS_DB_KEY)).key;
+
   return update(ref(database), {
-    [TALENTS_DB_KEY]: talents.map(section => ({
-      title: section.title,
-      text: sanitizeText(section.text),
-    })),
+    [`${TALENTS_DB_KEY}/${id}`]: { ...talent, id },
   });
 }

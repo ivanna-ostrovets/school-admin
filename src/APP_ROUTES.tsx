@@ -11,10 +11,11 @@ import BusinessCardPage from './features/BusinessCard/BusinessCardPage';
 import CategoriesPage from './features/Categories/CategoriesPage';
 import GraduatesPage from './features/Graduates/GraduatesPage';
 import PartnersPage from './features/Partners/PartnersPage';
+import CreateTalent from './features/Talents/CreateTalent';
 import TalentsPage from './features/Talents/TalentsPage';
 
 export interface AppRoute {
-  icon: any;
+  icon?: any;
   path: string;
   title: string;
   component: React.ReactNode;
@@ -54,6 +55,13 @@ export const APP_ROUTES = {
     component: <TalentsPage />,
     isPrivate: true,
     showInNavigation: true,
+  },
+  newTalent: {
+    path: '/talents/new',
+    title: 'Вернісаж талантів | Додати секцію',
+    component: <CreateTalent />,
+    isPrivate: true,
+    showInNavigation: false,
   },
   graduates: {
     path: '/graduates',

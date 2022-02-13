@@ -20,7 +20,7 @@ export interface Partner extends UnsavedPartner {
 
 export type Partners = { [key: string]: Partner };
 
-export interface Talent {
+export interface UnsavedTalent {
   title: string;
   text: string;
 }
