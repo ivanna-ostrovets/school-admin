@@ -2,6 +2,7 @@ import { ukUA } from '@mui/material/locale';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import AppContextProvider from './AppContext';
 import './firebaseService';
@@ -14,7 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <AppContextProvider>
       <ThemeProvider theme={theme}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </AppContextProvider>
   </React.StrictMode>,

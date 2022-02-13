@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppContext } from '../AppContext';
-import { ROUTES } from '../routes';
+import { APP_ROUTES } from '../APP_ROUTES';
 
 function AppToolbar() {
   const { pathname } = useLocation();
@@ -15,7 +15,7 @@ function AppToolbar() {
   const [pageTitle, setPageTitle] = useState('');
 
   useEffect(() => {
-    const pageRoute = Object.values(ROUTES).find(
+    const pageRoute = Object.values(APP_ROUTES).find(
       route => route.path === pathname,
     );
 

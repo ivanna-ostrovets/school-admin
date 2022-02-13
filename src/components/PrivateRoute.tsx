@@ -3,7 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import React, { useContext } from 'react';
 import { AppContext } from '../AppContext';
 
-export function PrivateRoute({ children }: { children: React.ReactNode }) {
+function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthorized, isLoadingAuth, signIn } = useContext(AppContext);
 
   if (isLoadingAuth) return <CircularProgress />;
@@ -18,3 +18,5 @@ export function PrivateRoute({ children }: { children: React.ReactNode }) {
 
   return <>{children}</>;
 }
+
+export default PrivateRoute;

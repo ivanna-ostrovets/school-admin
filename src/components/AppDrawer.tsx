@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute, ROUTES } from '../routes';
+import { AppRoute, APP_ROUTES } from '../APP_ROUTES';
 
 function DrawerItem({ icon, path, title }: AppRoute) {
   const { pathname } = useLocation();
@@ -43,7 +43,7 @@ export default function AppDrawer() {
       <Toolbar />
 
       <List>
-        {Object.values(ROUTES).map(route => (
+        {Object.values(APP_ROUTES).map(route => (
           <DrawerItem {...route} key={route.path} />
         ))}
       </List>
