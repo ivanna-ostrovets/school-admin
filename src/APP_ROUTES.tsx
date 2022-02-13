@@ -14,7 +14,7 @@ import PartnersPage from './features/Partners/PartnersPage';
 import CreateTalent from './features/Talents/CreateTalent';
 import EditTalent from './features/Talents/EditTalent';
 import TalentsPage from './features/Talents/TalentsPage';
-import TalentView from './features/Talents/TalentView';
+import TalentView from './features/Talents/TalentView/TalentView';
 
 export interface AppRoute {
   icon?: any;

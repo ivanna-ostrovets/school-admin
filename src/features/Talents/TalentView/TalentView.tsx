@@ -3,13 +3,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { removeTalent } from '../../api/talentsApi';
-import { APP_ROUTES } from '../../APP_ROUTES';
-import ConfirmDeleteDialog from '../../components/ConfirmDeleteDialog';
-import ElevationScroll from '../../components/ElevationScroll';
-import { sanitizeText } from '../../utils/sanitizeText';
+import { removeTalent } from '../../../api/talentsApi';
+import { APP_ROUTES } from '../../../APP_ROUTES';
+import ConfirmDeleteDialog from '../../../components/ConfirmDeleteDialog';
+import ElevationScroll from '../../../components/ElevationScroll';
+import { sanitizeText } from '../../../utils/sanitizeText';
 import styles from './TalentView.module.css';
-import { useFetchTalent } from './useFetchTalent';
+import { useFetchTalent } from '../useFetchTalent';
 
 function TalentView() {
   const navigate = useNavigate();
