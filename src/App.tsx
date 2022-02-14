@@ -21,6 +21,8 @@ const backToTopAnchorId = 'back-to-top-anchor';
 // TODO: main photo
 // TODO: categories
 // TODO: news
+// TODO: possibility to pin news
+// TODO: holidays calendar
 
 function App() {
   const routes = useRoutes(ROUTER_ROUTES);

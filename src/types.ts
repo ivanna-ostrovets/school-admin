@@ -41,3 +41,14 @@ export interface Graduates extends UnsavedGraduates {
 }
 
 export type GraduateTitles = { id: string; title: string }[];
+
+export interface UnsavedSchedule {
+  title: string;
+  text: string;
+}
+
+export interface Schedule extends UnsavedSchedule {
+  id: string;
+}
+
+export type ScheduleTitles = { id: string; title: string }[];

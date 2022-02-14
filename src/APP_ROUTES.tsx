@@ -1,4 +1,5 @@
 import BusinessIcon from '@mui/icons-material/Business';
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import ClassRoundedIcon from '@mui/icons-material/ClassRounded';
 import GradeIcon from '@mui/icons-material/Grade';
 import SchoolIcon from '@mui/icons-material/School';
@@ -14,6 +15,10 @@ import EditGraduates from './features/Graduates/EditGraduates';
 import GraduatesPage from './features/Graduates/GraduatesPage';
 import GraduatesView from './features/Graduates/GraduatesView';
 import PartnersPage from './features/Partners/PartnersPage';
+import CreateSchedule from './features/Schedule/CreateSchedule';
+import EditSchedule from './features/Schedule/EditSchedule';
+import SchedulePage from './features/Schedule/SchedulePage';
+import ScheduleView from './features/Schedule/ScheduleView';
 import CreateTalent from './features/Talents/CreateTalent';
 import EditTalent from './features/Talents/EditTalent';
 import TalentsPage from './features/Talents/TalentsPage';
@@ -113,6 +118,37 @@ export const APP_ROUTES = {
     getLink: (id: string) => `/graduates/${id}/edit`,
     title: 'Наші випускники | Редагувати',
     component: <EditGraduates />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  schedule: {
+    path: '/schedule',
+    title: 'Розклад',
+    icon: CalendarViewMonthIcon,
+    component: <SchedulePage />,
+    isPrivate: true,
+    showInNavigation: true,
+  },
+  newSchedule: {
+    path: '/schedule/new',
+    title: 'Розклад | Додати секцію',
+    component: <CreateSchedule />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  scheduleView: {
+    path: '/schedule/:id',
+    getLink: (id: string) => `/schedule/${id}`,
+    title: 'Розклад | Перегляд',
+    component: <ScheduleView />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  editSchedule: {
+    path: '/schedule/:id/edit',
+    getLink: (id: string) => `/schedule/${id}/edit`,
+    title: 'Розклад | Редагувати',
+    component: <EditSchedule />,
     isPrivate: true,
     showInNavigation: false,
   },
