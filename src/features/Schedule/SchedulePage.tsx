@@ -22,7 +22,7 @@ function SchedulePage() {
 
     fetchData();
   }, [isDataLoading, setDataLoading]);
-  console.log(isDataLoading);
+
   return (
     <>
       <ElevationScroll>
