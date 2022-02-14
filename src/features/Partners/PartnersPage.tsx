@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -31,33 +32,39 @@ function PartnersPage() {
   return (
     <>
       <ElevationScroll>
-        <TextField
-          label="Назва"
-          variant="outlined"
-          sx={inputStyles}
-          value={newPartner.name}
-          onChange={e => setNewPartner({ ...newPartner, name: e.target.value })}
-          onKeyPress={handleInputKeyPress}
-        />
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <TextField
+            label="Назва"
+            variant="outlined"
+            sx={inputStyles}
+            value={newPartner.name}
+            onChange={e =>
+              setNewPartner({ ...newPartner, name: e.target.value })
+            }
+            onKeyPress={handleInputKeyPress}
+          />
 
-        <TextField
-          label="Посилання"
-          variant="outlined"
-          sx={inputStyles}
-          value={newPartner.url}
-          onChange={e => setNewPartner({ ...newPartner, url: e.target.value })}
-          onKeyPress={handleInputKeyPress}
-        />
+          <TextField
+            label="Посилання"
+            variant="outlined"
+            sx={inputStyles}
+            value={newPartner.url}
+            onChange={e =>
+              setNewPartner({ ...newPartner, url: e.target.value })
+            }
+            onKeyPress={handleInputKeyPress}
+          />
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={add}
-          disabled={!canAddPartner}
-          sx={{ minWidth: 100 }}
-        >
-          Додати
-        </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={add}
+            disabled={!canAddPartner}
+            sx={{ minWidth: 100 }}
+          >
+            Додати
+          </Button>
+        </Box>
       </ElevationScroll>
 
       {partners.length > 0 && <Divider />}
