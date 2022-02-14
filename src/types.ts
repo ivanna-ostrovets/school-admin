@@ -30,3 +30,14 @@ export interface Talent extends UnsavedTalent {
 }
 
 export type TalentTitles = { id: string; title: string }[];
+
+export interface UnsavedGraduates {
+  title: string;
+  text: string;
+}
+
+export interface Graduates extends UnsavedGraduates {
+  id: string;
+}
+
+export type GraduateTitles = { id: string; title: string }[];

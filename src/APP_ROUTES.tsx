@@ -9,7 +9,10 @@ import { Navigate } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import BusinessCardPage from './features/BusinessCard/BusinessCardPage';
 import CategoriesPage from './features/Categories/CategoriesPage';
+import CreateGraduates from './features/Graduates/CreateGraduates';
+import EditGraduates from './features/Graduates/EditGraduates';
 import GraduatesPage from './features/Graduates/GraduatesPage';
+import GraduatesView from './features/Graduates/GraduatesView';
 import PartnersPage from './features/Partners/PartnersPage';
 import CreateTalent from './features/Talents/CreateTalent';
 import EditTalent from './features/Talents/EditTalent';
@@ -89,6 +92,29 @@ export const APP_ROUTES = {
     component: <GraduatesPage />,
     isPrivate: true,
     showInNavigation: true,
+  },
+  newGraduates: {
+    path: '/graduates/new',
+    title: 'Наші випускники | Додати секцію',
+    component: <CreateGraduates />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  graduatesView: {
+    path: '/graduates/:id',
+    getLink: (id: string) => `/graduates/${id}`,
+    title: 'Наші випускники | Перегляд',
+    component: <GraduatesView />,
+    isPrivate: true,
+    showInNavigation: false,
+  },
+  editGraduates: {
+    path: '/graduates/:id/edit',
+    getLink: (id: string) => `/graduates/${id}/edit`,
+    title: 'Наші випускники | Редагувати',
+    component: <EditGraduates />,
+    isPrivate: true,
+    showInNavigation: false,
   },
 };
 
