@@ -1,4 +1,4 @@
-import { SiteInfo } from '../../types';
+import { Hotline, SiteInfo } from '../../types';
 
 export const siteInfoInitialState: SiteInfo = {
   shortName: '',
@@ -7,6 +7,7 @@ export const siteInfoInitialState: SiteInfo = {
   youtubeLink: '',
   phoneNumbers: [],
   emails: [],
+  hotlines: [],
 };
 
 export enum SiteInfoActionType {
@@ -21,6 +22,9 @@ export enum SiteInfoActionType {
   AddEmail = 'AddEmail',
   UpdateEmail = 'UpdateEmail',
   DeleteEmail = 'DeleteEmail',
+  AddHotline = 'AddHotline',
+  UpdateHotline = 'UpdateHotline',
+  DeleteHotline = 'DeleteHotline',
 }
 
 export interface AddAllAction {
@@ -80,7 +84,24 @@ export interface DeleteEmailAction {
   index: number;
 }
 
+export interface AddHotlineAction {
+  type: SiteInfoActionType.AddHotline;
+  payload: Hotline;
+}
+
+export interface UpdateHotlineAction {
+  type: SiteInfoActionType.UpdateHotline;
+  hotline: Hotline;
+  index: number;
+}
+
+export interface DeleteHotlineAction {
+  type: SiteInfoActionType.DeleteHotline;
+  index: number;
+}
+
 type SiteInfoAction =
+  | AddAllAction
   | AddShortNameAction
   | AddFullNameAction
   | AddFacebookLinkAction
@@ -91,7 +112,9 @@ type SiteInfoAction =
   | AddEmailAction
   | UpdateEmailAction
   | DeleteEmailAction
-  | AddAllAction;
+  | AddHotlineAction
+  | UpdateHotlineAction
+  | DeleteHotlineAction;
 
 export function siteInfoReducer(state: SiteInfo, action: SiteInfoAction) {
   switch (action.type) {
@@ -159,6 +182,28 @@ export function siteInfoReducer(state: SiteInfo, action: SiteInfoAction) {
         emails: [
           ...state.emails.slice(0, action.index),
           ...state.emails.slice(action.index + 1),
+        ],
+      };
+    case SiteInfoActionType.AddHotline:
+      return {
+        ...state,
+        hotlines: [...state.hotlines, action.payload],
+      };
+    case SiteInfoActionType.UpdateHotline:
+      return {
+        ...state,
+        hotlines: [
+          ...state.hotlines.slice(0, action.index),
+          action.hotline,
+          ...state.hotlines.slice(action.index + 1),
+        ],
+      };
+    case SiteInfoActionType.DeleteHotline:
+      return {
+        ...state,
+        hotlines: [
+          ...state.hotlines.slice(0, action.index),
+          ...state.hotlines.slice(action.index + 1),
         ],
       };
     default:

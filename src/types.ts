@@ -1,3 +1,9 @@
+export interface Hotline {
+  title: string;
+  landlineNumber: string;
+  mobileNumber: string;
+}
+
 export interface SiteInfo {
   shortName: string;
   fullName: string;
@@ -5,6 +11,7 @@ export interface SiteInfo {
   youtubeLink: string;
   phoneNumbers: string[];
   emails: string[];
+  hotlines: Hotline[];
 }
 
 export interface Section {

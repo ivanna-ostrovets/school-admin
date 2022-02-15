@@ -5,17 +5,17 @@ import TextField from '@mui/material/TextField';
 import React from 'react';
 
 interface Props {
-  label: string;
   value: string;
   onDelete: () => void;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  label?: string;
 }
 
 function TextFieldWithDeleteAction({
-  label,
   value,
   onDelete,
   onChange,
+  label = '',
 }: Props) {
   return (
     <TextField

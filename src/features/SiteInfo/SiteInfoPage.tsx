@@ -1,12 +1,15 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useReducer } from 'react';
 import { fetchSiteInfo, updateSiteInfo } from '../../api/siteInfoApi';
 import ElevationScroll from '../../components/ElevationScroll';
 import TextFieldWithDeleteAction from '../../components/TextFieldWithDeleteAction';
+import { Hotline } from '../../types';
 import {
   SiteInfoActionType,
   siteInfoInitialState,
@@ -102,42 +105,25 @@ function SiteInfoPage() {
       <Divider sx={{ my: 3, mx: -3 }} />
 
       <Box display="flex" justifyContent="space-between" mb={2}>
-        <Typography variant="subtitle1">Контакти</Typography>
+        <Typography variant="subtitle1">Номер телефону</Typography>
 
-        <Box>
-          <Button
-            variant="outlined"
-            color="primary"
-            sx={{ mr: 2 }}
-            onClick={() =>
-              dispatch({
-                type: SiteInfoActionType.AddPhoneNumber,
-                payload: '',
-              })
-            }
-          >
-            Додати номер телефону
-          </Button>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() =>
-              dispatch({
-                type: SiteInfoActionType.AddEmail,
-                payload: '',
-              })
-            }
-          >
-            Додати Email
-          </Button>
-        </Box>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() =>
+            dispatch({
+              type: SiteInfoActionType.AddPhoneNumber,
+              payload: '',
+            })
+          }
+        >
+          Додати
+        </Button>
       </Box>
 
       {state.phoneNumbers.map((number, index) => (
         <TextFieldWithDeleteAction
           key={`phone-number-${index}`}
-          label="Номер телефону"
           value={number}
           onDelete={() =>
             dispatch({
@@ -155,7 +141,24 @@ function SiteInfoPage() {
         />
       ))}
 
-      <Divider sx={{ mb: 2 }} />
+      <Divider sx={{ my: 3, mx: -3 }} />
+
+      <Box display="flex" justifyContent="space-between" mb={2}>
+        <Typography variant="subtitle1">Email</Typography>
+
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() =>
+            dispatch({
+              type: SiteInfoActionType.AddEmail,
+              payload: '',
+            })
+          }
+        >
+          Додати
+        </Button>
+      </Box>
 
       {state.emails.map((email, index) => (
         <TextFieldWithDeleteAction
@@ -173,6 +176,85 @@ function SiteInfoPage() {
             })
           }
         />
+      ))}
+
+      <Divider sx={{ my: 3, mx: -3 }} />
+
+      <Box display="flex" justifyContent="space-between" mb={2}>
+        <Typography variant="subtitle1">Гарячі лінії</Typography>
+
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() =>
+            dispatch({
+              type: SiteInfoActionType.AddHotline,
+              payload: {} as Hotline,
+            })
+          }
+        >
+          Додати
+        </Button>
+      </Box>
+
+      {state.hotlines.map((hotline, index) => (
+        <Box
+          key={`hotline-${index}`}
+          mb={2}
+          gap={2}
+          display="flex"
+          alignItems="center"
+        >
+          <TextField
+            fullWidth
+            label="Назва"
+            variant="outlined"
+            value={hotline.title}
+            onChange={e =>
+              dispatch({
+                type: SiteInfoActionType.UpdateHotline,
+                hotline: { ...hotline, title: e.target.value },
+                index,
+              })
+            }
+          />
+
+          <TextField
+            label="Стаціонарний номер"
+            variant="outlined"
+            value={hotline.landlineNumber}
+            sx={{ minWidth: 200 }}
+            onChange={e =>
+              dispatch({
+                type: SiteInfoActionType.UpdateHotline,
+                hotline: { ...hotline, landlineNumber: e.target.value },
+                index,
+              })
+            }
+          />
+
+          <TextField
+            label="Мобільний номер"
+            variant="outlined"
+            value={hotline.mobileNumber}
+            sx={{ minWidth: 200 }}
+            onChange={e =>
+              dispatch({
+                type: SiteInfoActionType.UpdateHotline,
+                hotline: { ...hotline, mobileNumber: e.target.value },
+                index,
+              })
+            }
+          />
+
+          <IconButton
+            onClick={() =>
+              dispatch({ type: SiteInfoActionType.DeleteHotline, index })
+            }
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
       ))}
     </Box>
   );
