@@ -1,6 +1,5 @@
-import { SxProps } from '@mui/material';
 import Box from '@mui/material/Box';
-import { Theme } from '@mui/material/styles';
+import { SxProps, Theme } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import React from 'react';
 

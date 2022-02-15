@@ -1,3 +1,12 @@
+export interface SiteInfo {
+  shortName: string;
+  fullName: string;
+  facebookLink: string;
+  youtubeLink: string;
+  phoneNumbers: string[];
+  emails: string[];
+}
+
 export interface Section {
   title: string;
   text: string;

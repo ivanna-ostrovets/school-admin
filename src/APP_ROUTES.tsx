@@ -2,6 +2,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import ClassRoundedIcon from '@mui/icons-material/ClassRounded';
 import GradeIcon from '@mui/icons-material/Grade';
+import InfoIcon from '@mui/icons-material/Info';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
 import React from 'react';
@@ -19,6 +20,7 @@ import CreateSchedule from './features/Schedule/CreateSchedule';
 import EditSchedule from './features/Schedule/EditSchedule';
 import SchedulePage from './features/Schedule/SchedulePage';
 import ScheduleView from './features/Schedule/ScheduleView';
+import SiteInfoPage from './features/SiteInfo/SiteInfoPage';
 import CreateTalent from './features/Talents/CreateTalent';
 import EditTalent from './features/Talents/EditTalent';
 import TalentsPage from './features/Talents/TalentsPage';
@@ -35,6 +37,14 @@ export interface AppRoute {
 }
 
 export const APP_ROUTES = {
+  siteInfo: {
+    path: '/site-info',
+    title: 'Загальна інформація',
+    icon: InfoIcon,
+    component: <SiteInfoPage />,
+    isPrivate: true,
+    showInNavigation: true,
+  },
   menuItems: {
     path: '/menu-items',
     title: 'Пункти меню',
@@ -157,7 +167,7 @@ export const APP_ROUTES = {
 export const ROUTER_ROUTES: RouteObject[] = [
   {
     path: '*',
-    element: <Navigate to={APP_ROUTES.menuItems.path} />,
+    element: <Navigate to={APP_ROUTES.siteInfo.path} />,
   },
   ...Object.values(APP_ROUTES).map(({ path, component, isPrivate }) => ({
     path,

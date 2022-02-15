@@ -13,10 +13,7 @@ const backToTopAnchorId = 'back-to-top-anchor';
 
 // TODO: drop empty HTML tags
 // TODO: fix text editor typing
-// TODO: site short & full names, social media links
 // TODO: hotlines
-// TODO: contacts
-// TODO: address
 // TODO: main photo
 // TODO: categories
 // TODO: news
