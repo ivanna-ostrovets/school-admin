@@ -1,53 +1,47 @@
-import { child, get, push, ref, update } from 'firebase/database';
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { Graduates, GraduateTitles, UnsavedGraduates } from '../types';
 
-const GRADUATES_DB_KEY = 'graduates';
+const collectionReference = collection(
+  database,
+  'graduates',
+) as CollectionReference<UnsavedGraduates>;
 
 export async function fetchGraduateTitles() {
-  const snapshot = await get(child(ref(database), GRADUATES_DB_KEY));
-  const data: Record<string, UnsavedGraduates> = snapshot.val() || {};
+  const docsSnap = await getDocs(collectionReference);
+  const titles: GraduateTitles = [];
 
-  const titles: GraduateTitles = Object.entries(data).reduce(
-    (titles: GraduateTitles, [id, graduates]) => [
-      ...titles,
-      { id, title: graduates.title },
-    ],
-    [],
-  );
+  docsSnap.forEach(doc => {
+    titles.push({ id: doc.id, title: doc.data().title });
+  });
 
   return titles;
 }
 
 export async function fetchGraduates(id: string) {
-  const snapshot = await get(child(ref(database), `${GRADUATES_DB_KEY}/${id}`));
-  const data: Graduates = snapshot.val();
+  const docSnap = await getDoc(doc(collectionReference, id));
 
-  if (!data) return undefined;
-
-  return { ...data, id };
+  if (docSnap.exists()) return { id, ...docSnap.data() };
 }
 
 export async function addGraduates(graduates: UnsavedGraduates) {
-  const id = push(child(ref(database), GRADUATES_DB_KEY)).key;
+  return (await addDoc(collectionReference, graduates)).id;
+}
 
-  await update(ref(database), {
-    [`${GRADUATES_DB_KEY}/${id}`]: { ...graduates, id },
-  });
-
+export async function updateGraduates({ id, ...graduates }: Graduates) {
+  await updateDoc(doc(collectionReference, id), graduates);
   return id;
 }
 
-export async function updateGraduates(graduates: Graduates) {
-  await update(ref(database), {
-    [`${GRADUATES_DB_KEY}/${graduates.id}`]: graduates,
-  });
-
-  return graduates.id;
-}
-
 export async function removeGraduates(id: string) {
-  return update(ref(database), {
-    [`${GRADUATES_DB_KEY}/${id}`]: null,
-  });
+  return deleteDoc(doc(collectionReference, id));
 }

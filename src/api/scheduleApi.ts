@@ -1,53 +1,47 @@
-import { child, get, push, ref, update } from 'firebase/database';
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { Schedule, ScheduleTitles, UnsavedSchedule } from '../types';
 
-const SCHEDULE_DB_KEY = 'schedule';
+const collectionReference = collection(
+  database,
+  'schedule',
+) as CollectionReference<UnsavedSchedule>;
 
 export async function fetchScheduleTitles() {
-  const snapshot = await get(child(ref(database), SCHEDULE_DB_KEY));
-  const data: Record<string, UnsavedSchedule> = snapshot.val() || {};
+  const docsSnap = await getDocs(collectionReference);
+  const titles: ScheduleTitles = [];
 
-  const scheduleTitles: ScheduleTitles = Object.entries(data).reduce(
-    (titles: ScheduleTitles, [id, schedule]) => [
-      ...titles,
-      { id, title: schedule.title },
-    ],
-    [],
-  );
+  docsSnap.forEach(doc => {
+    titles.push({ id: doc.id, title: doc.data().title });
+  });
 
-  return scheduleTitles;
+  return titles;
 }
 
 export async function fetchSchedule(id: string) {
-  const snapshot = await get(child(ref(database), `${SCHEDULE_DB_KEY}/${id}`));
-  const data: Schedule = snapshot.val();
+  const docSnap = await getDoc(doc(collectionReference, id));
 
-  if (!data) return undefined;
-
-  return { ...data, id };
+  if (docSnap.exists()) return { id, ...docSnap.data() };
 }
 
 export async function addSchedule(schedule: UnsavedSchedule) {
-  const id = push(child(ref(database), SCHEDULE_DB_KEY)).key;
+  return (await addDoc(collectionReference, schedule)).id;
+}
 
-  await update(ref(database), {
-    [`${SCHEDULE_DB_KEY}/${id}`]: { ...schedule, id },
-  });
-
+export async function updateSchedule({ id, ...schedule }: Schedule) {
+  await updateDoc(doc(collectionReference, id), schedule);
   return id;
 }
 
-export async function updateSchedule(schedule: Schedule) {
-  await update(ref(database), {
-    [`${SCHEDULE_DB_KEY}/${schedule.id}`]: schedule,
-  });
-
-  return schedule.id;
-}
-
 export async function removeSchedule(id: string) {
-  return update(ref(database), {
-    [`${SCHEDULE_DB_KEY}/${id}`]: null,
-  });
+  return deleteDoc(doc(collectionReference, id));
 }

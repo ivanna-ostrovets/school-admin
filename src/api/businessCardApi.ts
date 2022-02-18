@@ -1,25 +1,31 @@
-import { child, get, ref, update } from 'firebase/database';
+import {
+  collection,
+  CollectionReference,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { BusinessCard } from '../types';
 import { sanitizeText } from '../utils/sanitizeText';
 
-const BUSINESS_CARD_DB_KEY = 'businessCard';
-const BUSINESS_CARD_TITLE_DB_KEY = `${BUSINESS_CARD_DB_KEY}/title`;
-const BUSINESS_CARD_SUBTITLE_DB_KEY = `${BUSINESS_CARD_DB_KEY}/subtitle`;
-const BUSINESS_CARD_SECTIONS_DB_KEY = `${BUSINESS_CARD_DB_KEY}/sections`;
+export const collectionReference = collection(
+  database,
+  'businessCard',
+) as CollectionReference<BusinessCard>;
+const documentId = 'data';
 
 export async function fetchBusinessCard() {
-  const snapshot = await get(child(ref(database), BUSINESS_CARD_DB_KEY));
-  const data: BusinessCard = snapshot.val() || {};
+  const docSnap = await getDoc(doc(collectionReference, documentId));
 
-  return data;
+  if (docSnap.exists()) return docSnap.data();
 }
 
 export async function updateBusinessCard(card: BusinessCard) {
-  return update(ref(database), {
-    [BUSINESS_CARD_TITLE_DB_KEY]: card.title,
-    [BUSINESS_CARD_SUBTITLE_DB_KEY]: card.subtitle,
-    [BUSINESS_CARD_SECTIONS_DB_KEY]: card.sections.map(section => ({
+  await updateDoc(doc(collectionReference, documentId), {
+    title: card.title,
+    subtitle: card.subtitle,
+    sections: card.sections.map(section => ({
       title: section.title,
       text: sanitizeText(section.text),
     })),

@@ -41,7 +41,7 @@ function PartnerItem({ partner, setPartners }: Props) {
   }
 
   const handleRemoval = async () => {
-    await removePartner(partner);
+    await removePartner(partner.id);
 
     setPartners(prevPartners => {
       const { [partner.id]: _, ...newPartners } = prevPartners;

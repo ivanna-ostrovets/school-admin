@@ -14,7 +14,8 @@ export function useBusinessCard() {
 
   useEffect(() => {
     async function fetchData() {
-      setDbCard(await fetchBusinessCard());
+      const data = await fetchBusinessCard();
+      if (data) setDbCard(data);
     }
 
     fetchData();

@@ -1,16 +1,25 @@
-import { child, get, ref, update } from 'firebase/database';
+import {
+  collection,
+  CollectionReference,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { SiteInfo } from '../types';
 
-const SITE_INFO_DB_KEY = 'siteInfo';
+export const collectionReference = collection(
+  database,
+  'siteInfo',
+) as CollectionReference<SiteInfo>;
+const documentId = 'data';
 
 export async function fetchSiteInfo() {
-  const snapshot = await get(child(ref(database), SITE_INFO_DB_KEY));
-  const data: SiteInfo = snapshot.val() || {};
+  const docSnap = await getDoc(doc(collectionReference, documentId));
 
-  return data;
+  if (docSnap.exists()) return docSnap.data();
 }
 
 export async function updateSiteInfo(info: SiteInfo) {
-  return update(ref(database), { [SITE_INFO_DB_KEY]: info });
+  await updateDoc(doc(collectionReference, documentId), info);
 }

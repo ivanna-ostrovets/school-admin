@@ -1,53 +1,47 @@
-import { child, get, push, ref, update } from 'firebase/database';
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { Talent, TalentTitles, UnsavedTalent } from '../types';
 
-const TALENTS_DB_KEY = 'talents';
+const collectionReference = collection(
+  database,
+  'talents',
+) as CollectionReference<UnsavedTalent>;
 
 export async function fetchTalentTitles() {
-  const snapshot = await get(child(ref(database), TALENTS_DB_KEY));
-  const data: Record<string, UnsavedTalent> = snapshot.val() || {};
+  const docsSnap = await getDocs(collectionReference);
+  const titles: TalentTitles = [];
 
-  const talentTitles: TalentTitles = Object.entries(data).reduce(
-    (titles: TalentTitles, [id, talent]) => [
-      ...titles,
-      { id, title: talent.title },
-    ],
-    [],
-  );
+  docsSnap.forEach(doc => {
+    titles.push({ id: doc.id, title: doc.data().title });
+  });
 
-  return talentTitles;
+  return titles;
 }
 
 export async function fetchTalent(id: string) {
-  const snapshot = await get(child(ref(database), `${TALENTS_DB_KEY}/${id}`));
-  const data: Talent = snapshot.val();
+  const docSnap = await getDoc(doc(collectionReference, id));
 
-  if (!data) return undefined;
-
-  return { ...data, id };
+  if (docSnap.exists()) return { id, ...docSnap.data() };
 }
 
 export async function addTalent(talent: UnsavedTalent) {
-  const id = push(child(ref(database), TALENTS_DB_KEY)).key;
+  return (await addDoc(collectionReference, talent)).id;
+}
 
-  await update(ref(database), {
-    [`${TALENTS_DB_KEY}/${id}`]: { ...talent, id },
-  });
-
+export async function updateTalent({ id, ...talent }: Talent) {
+  await updateDoc(doc(collectionReference, id), talent);
   return id;
 }
 
-export async function updateTalent(talent: Talent) {
-  await update(ref(database), {
-    [`${TALENTS_DB_KEY}/${talent.id}`]: talent,
-  });
-
-  return talent.id;
-}
-
 export async function removeTalent(id: string) {
-  return update(ref(database), {
-    [`${TALENTS_DB_KEY}/${id}`]: null,
-  });
+  return deleteDoc(doc(collectionReference, id));
 }

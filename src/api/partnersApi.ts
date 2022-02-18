@@ -1,34 +1,40 @@
-import { child, get, push, ref, update } from 'firebase/database';
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { database } from '../firebaseService';
 import { Partner, Partners, UnsavedPartner } from '../types';
 
-const PARTNERS_DB_KEY = 'partners';
+const collectionReference = collection(
+  database,
+  'partners',
+) as CollectionReference<UnsavedPartner>;
 
 export async function fetchPartners() {
-  const snapshot = await get(child(ref(database), PARTNERS_DB_KEY));
-  const data: Partners = snapshot.val() || {};
+  const docsSnap = await getDocs(collectionReference);
+  const partners: Partners = {};
 
-  return data;
+  docsSnap.forEach(doc => {
+    partners[doc.id] = { id: doc.id, ...doc.data() };
+  });
+
+  return partners;
 }
 
 export async function addPartner(partner: UnsavedPartner) {
-  const id = push(child(ref(database), PARTNERS_DB_KEY)).key;
+  return (await addDoc(collectionReference, partner)).id;
+}
 
-  await update(ref(database), {
-    [`${PARTNERS_DB_KEY}/${id}`]: { ...partner, id },
-  });
-
+export async function updatePartner({ id, ...partner }: Partner) {
+  await updateDoc(doc(collectionReference, id), partner);
   return id;
 }
 
-export async function updatePartner(partner: Partner) {
-  return update(ref(database), {
-    [`${PARTNERS_DB_KEY}/${partner.id}`]: partner,
-  });
-}
-
-export async function removePartner(partner: Partner) {
-  return update(ref(database), {
-    [`${PARTNERS_DB_KEY}/${partner.id}`]: null,
-  });
+export async function removePartner(id: string) {
+  return deleteDoc(doc(collectionReference, id));
 }

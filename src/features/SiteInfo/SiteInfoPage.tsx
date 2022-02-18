@@ -21,9 +21,13 @@ function SiteInfoPage() {
 
   useEffect(() => {
     async function fetchData() {
+      const data = await fetchSiteInfo();
+
+      if (!data) return;
+
       dispatch({
         type: SiteInfoActionType.AddAll,
-        payload: await fetchSiteInfo(),
+        payload: data,
       });
     }
 

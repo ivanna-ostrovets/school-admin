@@ -119,7 +119,10 @@ type SiteInfoAction =
 export function siteInfoReducer(state: SiteInfo, action: SiteInfoAction) {
   switch (action.type) {
     case SiteInfoActionType.AddAll:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload,
+      };
     case SiteInfoActionType.AddShortName:
       return {
         ...state,
