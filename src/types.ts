@@ -7,6 +7,7 @@ export interface Hotline {
 export interface SiteInfo {
   shortName: string;
   fullName: string;
+  mainPhoto: string;
   facebookLink: string;
   youtubeLink: string;
   phoneNumbers: string[];

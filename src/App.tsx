@@ -11,10 +11,12 @@ import ScrollToAnchor from './components/ScrollToAnchor';
 
 const backToTopAnchorId = 'back-to-top-anchor';
 
+// TODO: setup firestore backups
+// TODO: try Firestore Lite SDK
+// TODO: add thumbnails
+// TODO: add image compression
 // TODO: drop empty HTML tags
 // TODO: fix text editor typing
-// TODO: hotlines
-// TODO: main photo
 // TODO: categories
 // TODO: news
 // TODO: possibility to pin news

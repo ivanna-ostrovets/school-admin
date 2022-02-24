@@ -3,6 +3,7 @@ import { Hotline, SiteInfo } from '../../types';
 export const siteInfoInitialState: SiteInfo = {
   shortName: '',
   fullName: '',
+  mainPhoto: '',
   facebookLink: '',
   youtubeLink: '',
   phoneNumbers: [],
@@ -14,6 +15,7 @@ export enum SiteInfoActionType {
   AddAll = 'AddAll',
   AddShortName = 'AddShortName',
   AddFullName = 'AddFullName',
+  AddMainPhoto = 'AddMainPhoto',
   AddFacebookLink = 'AddFacebookLink',
   AddYouTubeLink = 'AddYouTubeLink',
   AddPhoneNumber = 'AddPhoneNumber',
@@ -39,6 +41,11 @@ export interface AddShortNameAction {
 
 export interface AddFullNameAction {
   type: SiteInfoActionType.AddFullName;
+  payload: string;
+}
+
+export interface AddMainPhotoAction {
+  type: SiteInfoActionType.AddMainPhoto;
   payload: string;
 }
 
@@ -104,6 +111,7 @@ type SiteInfoAction =
   | AddAllAction
   | AddShortNameAction
   | AddFullNameAction
+  | AddMainPhotoAction
   | AddFacebookLinkAction
   | AddYouTubeLinkAction
   | AddPhoneNumberAction
@@ -132,6 +140,11 @@ export function siteInfoReducer(state: SiteInfo, action: SiteInfoAction) {
       return {
         ...state,
         fullName: action.payload,
+      };
+    case SiteInfoActionType.AddMainPhoto:
+      return {
+        ...state,
+        mainPhoto: action.payload,
       };
     case SiteInfoActionType.AddFacebookLink:
       return {

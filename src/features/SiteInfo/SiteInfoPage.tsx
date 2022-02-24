@@ -5,9 +5,11 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import { fetchSiteInfo, updateSiteInfo } from '../../api/siteInfoApi';
 import ElevationScroll from '../../components/ElevationScroll';
+import FilePicker, { AcceptType } from '../../components/FilePicker/FilePicker';
+import { useFilePicker } from '../../components/FilePicker/useFilePicker';
 import TextFieldWithDeleteAction from '../../components/TextFieldWithDeleteAction';
 import { Hotline } from '../../types';
 import {
@@ -18,6 +20,11 @@ import {
 
 function SiteInfoPage() {
   const [state, dispatch] = useReducer(siteInfoReducer, siteInfoInitialState);
+  const urls = useMemo(
+    () => (state.mainPhoto ? [state.mainPhoto] : []),
+    [state.mainPhoto],
+  );
+  const { saveFiles, ...filePicker } = useFilePicker(urls);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +47,18 @@ function SiteInfoPage() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => updateSiteInfo(state)}
+          onClick={async () => {
+            const urls = await saveFiles();
+
+            if (!urls) return updateSiteInfo(state);
+
+            await dispatch({
+              type: SiteInfoActionType.AddMainPhoto,
+              payload: urls[0],
+            });
+
+            await updateSiteInfo({ ...state, mainPhoto: urls[0] });
+          }}
         >
           Зберегти
         </Button>
@@ -77,6 +95,14 @@ function SiteInfoPage() {
 
       <Divider sx={{ my: 3, mx: -3 }} />
 
+      <FilePicker
+        sectionTitle="Головне фото"
+        accept={AcceptType.images}
+        {...filePicker}
+      />
+
+      <Divider sx={{ my: 3, mx: -3 }} />
+
       <Typography variant="subtitle1" mb={2}>
         Соціальні мережі
       </Typography>
@@ -108,7 +134,12 @@ function SiteInfoPage() {
 
       <Divider sx={{ my: 3, mx: -3 }} />
 
-      <Box display="flex" justifyContent="space-between" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="subtitle1">Номер телефону</Typography>
 
         <Button
@@ -147,7 +178,12 @@ function SiteInfoPage() {
 
       <Divider sx={{ my: 3, mx: -3 }} />
 
-      <Box display="flex" justifyContent="space-between" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="subtitle1">Email</Typography>
 
         <Button
@@ -184,7 +220,12 @@ function SiteInfoPage() {
 
       <Divider sx={{ my: 3, mx: -3 }} />
 
-      <Box display="flex" justifyContent="space-between" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="subtitle1">Гарячі лінії</Typography>
 
         <Button
